@@ -18,5 +18,8 @@ class EndPointConstants {
   // banners
   static const String bannersBase = "$_baseUrl/Banners";
 
-  //
+  // favorite
+  static const String baseFavorite = "$_baseUrl/FavoriteProduct";
+
+  // products
 }

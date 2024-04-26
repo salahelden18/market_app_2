@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import '../../../../products/presentation/views/products_screen.dart';
 import '../../../data/models/branch_category_model.dart';
 
 class CategoryListItemWidget extends StatelessWidget {
-  const CategoryListItemWidget({super.key, required this.categoryModel});
+  const CategoryListItemWidget(
+      {super.key, required this.categoryModel, required this.index});
   final BranchCategoryModel categoryModel;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductsScreen.routeName, arguments: index);
+      },
       child: Column(
         children: [
           // The category image

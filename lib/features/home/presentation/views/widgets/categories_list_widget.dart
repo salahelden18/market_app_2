@@ -42,6 +42,7 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
             mainAxisExtent: 150,
           ),
           itemBuilder: (context, index) => CategoryListItemWidget(
+            index: index,
             categoryModel: state.categories[index],
           ),
           itemCount: state.categories.length,

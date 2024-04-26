@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'features/products/data/repos/product_repo.dart';
+import 'features/products/data/repos/products_repo_impl.dart';
 import 'features/authentication/data/repos/authentication_repo.dart';
 import 'features/authentication/data/repos/authentication_repo_impl.dart';
 import 'core/services/location_service.dart';
@@ -24,4 +26,5 @@ Future<void> init() async {
   sl.registerLazySingleton<AddressRepo>(() => AddressRepoImpl(sl()));
   sl.registerLazySingleton<AuthenticationRepo>(
       () => AuthenticationRepoImpl(sl()));
+  sl.registerLazySingleton<ProductsRepo>(() => ProductsRepoImpl(sl()));
 }
