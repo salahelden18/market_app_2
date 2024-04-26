@@ -5,6 +5,7 @@ import 'package:market_app_2/features/authentication/presentation/views/authenti
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
+import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import 'package:market_app_2/features/products/presentation/views/products_screen.dart';
 import 'package:market_app_2/loading_data_screen.dart';
 import 'package:market_app_2/not_found_screen.dart';
@@ -38,6 +39,11 @@ Route<dynamic> generateRouter(RouteSettings settings) {
         builder: (ctx) => BlocProvider(
             create: (ctx) => ProductsCubit(sl()),
             child: const ProductsScreen()),
+        settings: settings,
+      );
+    case ProductDetailsScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => const ProductDetailsScreen(),
         settings: settings,
       );
     default:

@@ -1,4 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:market_app_2/features/basket/data/repo/basket_repo.dart';
+import 'package:market_app_2/features/basket/data/repo/basket_repo_impl.dart';
+import 'features/favorite/data/repo/favorite_repo.dart';
+import 'features/favorite/data/repo/favorite_repo_impl.dart';
 import 'features/products/data/repos/product_repo.dart';
 import 'features/products/data/repos/products_repo_impl.dart';
 import 'features/authentication/data/repos/authentication_repo.dart';
@@ -27,4 +31,6 @@ Future<void> init() async {
   sl.registerLazySingleton<AuthenticationRepo>(
       () => AuthenticationRepoImpl(sl()));
   sl.registerLazySingleton<ProductsRepo>(() => ProductsRepoImpl(sl()));
+  sl.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImpl(sl()));
+  sl.registerLazySingleton<BasketRepo>(() => BasketRepoImpl(sl()));
 }

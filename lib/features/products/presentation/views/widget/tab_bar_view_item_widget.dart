@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../favorite/presentation/model_views/favorites_cubit.dart';
+import '../../../../favorite/presentation/model_views/favorites_states.dart';
 import '../../../../../core/style/font_style.dart';
 import '../../../../../core/widget/loading_widget.dart';
 import '../../../../home/presentation/view_models/branch/branch_cubit.dart';
@@ -50,61 +52,67 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
     context.watch<ProductsCubit>();
     return isLoading
         ? const LoadingWidget()
-        : Column(
-            children: [
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 50,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 10),
-                  itemCount: item.productsReponseModel.length,
-                  itemBuilder: (ctx, index) => TabHeaderContainerWidget(
-                    isSelected: true,
-                    title: item
-                        .productsReponseModel[index].subCategoryModel.enName,
+        : BlocBuilder<FavoritesCubit, FavoriteStates>(
+            builder: (context, favoriteState) {
+            return Column(
+              children: [
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 10),
+                    itemCount: item.productsReponseModel.length,
+                    itemBuilder: (ctx, index) => TabHeaderContainerWidget(
+                      isSelected: true,
+                      title: item
+                          .productsReponseModel[index].subCategoryModel.enName,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  itemCount: item.productsReponseModel.length,
-                  itemBuilder: (ctx, productIndex) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+                const SizedBox(height: 20),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    itemCount: item.productsReponseModel.length,
+                    itemBuilder: (ctx, productIndex) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           item.productsReponseModel[productIndex]
                               .subCategoryModel.enName,
-                          style: FontStyle.size22Black600),
-                      const SizedBox(height: 15),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 20,
-                          mainAxisExtent: 160,
+                          style: FontStyle.size22Black600,
                         ),
-                        itemBuilder: (ctx, index) => ProductGridViewItemWidget(
-                          branchProductModel: item
-                              .productsReponseModel[productIndex]
-                              .branchProducts[index],
+                        const SizedBox(height: 15),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 20,
+                            mainAxisExtent: 160,
+                          ),
+                          itemBuilder: (ctx, index) =>
+                              ProductGridViewItemWidget(
+                            favorite: favoriteState.favoriteProducts,
+                            branchProductModel: item
+                                .productsReponseModel[productIndex]
+                                .branchProducts[index],
+                          ),
+                          itemCount: item.productsReponseModel[productIndex]
+                              .branchProducts.length,
                         ),
-                        itemCount: item.productsReponseModel[productIndex]
-                            .branchProducts.length,
-                      ),
-                      const SizedBox(height: 20)
-                    ],
+                        const SizedBox(height: 20)
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
+          });
   }
 }

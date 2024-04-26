@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../favorite/presentation/views/favorite_screen.dart';
-import '../../../../basket/basket_screen.dart';
+import '../../../../basket/presentation/views/basket_screen.dart';
 import '../../../../profile/profile_screen.dart';
 import '../../views/widgets/home_screen_layout.dart';
 

@@ -22,4 +22,7 @@ class EndPointConstants {
   static const String baseFavorite = "$_baseUrl/FavoriteProduct";
 
   // products
+
+  // basket
+  static const String basketBase = '$_baseUrl/Basket';
 }

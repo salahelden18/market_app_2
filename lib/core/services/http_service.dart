@@ -283,6 +283,7 @@ class HttpService extends HttpServiceInterface {
       String? token = await _sharedPreferencesService
           .getData<String>(StringConstants.token);
       if (token != null) {
+        print(token);
         requestHeaders['Authorization'] = 'Bearer $token';
       }
     }

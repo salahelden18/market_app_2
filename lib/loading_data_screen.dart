@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 
 import 'core/widget/loading_widget.dart';
@@ -34,11 +36,15 @@ class LoadingDataScreen extends StatelessWidget {
     );
   }
 
+  // TODO will be formated later
   Future getData(BuildContext context) async {
     final location = context.read<LocationAndGpsCubit>().state;
 
     // here the user is authenticated
-    await context.read<AddressCubit>().getAddresses();
+    await Future.wait([
+      context.read<AddressCubit>().getAddresses(),
+      context.read<FavoritesCubit>().getFavorites()
+    ]);
 
     if (context.mounted) {
       final address = context.read<AddressCubit>().state;
@@ -51,6 +57,11 @@ class LoadingDataScreen extends StatelessWidget {
               address.selectedAddress?.subDistrictId,
             ),
       ]);
+
+      // gettinn the basket data
+      await context
+          .read<BasketCubit>()
+          .getBasket(context.read<BranchCubit>().state.branchModel!.id);
     }
     Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
