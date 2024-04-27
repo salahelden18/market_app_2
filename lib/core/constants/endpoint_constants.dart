@@ -25,4 +25,16 @@ class EndPointConstants {
 
   // basket
   static const String basketBase = '$_baseUrl/Basket';
+
+  // countries
+  static const String countryBase = "$_baseUrl/Countries";
+
+  // cities
+  static const String cityBase = "$_baseUrl/Cities";
+
+  // district
+  static const String districtBase = "$_baseUrl/Districts";
+
+  // subDistricts
+  static const String subDistrictBase = "$_baseUrl/SubDistricts";
 }

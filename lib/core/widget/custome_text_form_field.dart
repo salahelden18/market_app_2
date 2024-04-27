@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../style/app_colors.dart';
 import '../style/font_style.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
-      {super.key,
-      required this.validator,
-      required this.controller,
-      required this.label,
-      this.isPass = false,
-      this.keyboardType,
-      this.autovalidateMode,
-      this.prefixIcon});
+  const CustomTextFormField({
+    super.key,
+    this.validator,
+    required this.controller,
+    required this.label,
+    this.isPass = false,
+    this.keyboardType,
+    this.autovalidateMode,
+    this.prefixIcon,
+    this.inputFormatters,
+  });
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final TextInputType? keyboardType;
@@ -19,10 +22,12 @@ class CustomTextFormField extends StatelessWidget {
   final String label;
   final AutovalidateMode? autovalidateMode;
   final IconData? prefixIcon;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: inputFormatters,
       autovalidateMode: autovalidateMode,
       validator: validator,
       controller: controller,

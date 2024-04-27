@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:market_app_2/features/basket/data/models/basket_product_model.dart';
+import 'basket_product_model.dart';
 
 class BasketReponseModel extends Equatable {
   final String id;
