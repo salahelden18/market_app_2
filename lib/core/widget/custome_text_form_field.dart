@@ -23,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final IconData? prefixIcon;
   final List<TextInputFormatter>? inputFormatters;
+  final double _borderRadius = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +41,19 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         fillColor: const Color(0xffE2E2E2),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(_borderRadius),
             borderSide: BorderSide.none),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(_borderRadius),
             borderSide: BorderSide.none),
         focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(_borderRadius),
             borderSide: BorderSide.none),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(_borderRadius),
             borderSide: BorderSide.none),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(_borderRadius),
           borderSide: const BorderSide(color: AppColors.errorColor),
         ),
       ),

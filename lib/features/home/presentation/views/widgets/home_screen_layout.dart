@@ -10,22 +10,30 @@ class HomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: ListView(
-        padding: const EdgeInsets.all(10),
-        children: const [
-          SizedBox(height: 30),
-          HomeHeaderSection(),
-          SizedBox(height: 30),
-          BannersWidget(),
-          SizedBox(height: 20),
-          // TODO add active orders here
-          CategorySection(
-            title: 'Categories',
-            widget: CategoriesListWidget(),
-          ),
-          SizedBox(height: 50),
-        ],
+      child: ListView.separated(
+        itemBuilder: (context, index) {
+          if (index == 1) {
+            return children[index];
+          }
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: children[index],
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 30),
+        itemCount: children.length,
       ),
     );
   }
+
+  final List<Widget> children = const [
+    HomeHeaderSection(),
+    BannersWidget(),
+    // TODO: add active orders here
+    CategorySection(
+      title: 'Categories',
+      widget: CategoriesListWidget(),
+    ),
+    SizedBox(height: 50),
+  ];
 }

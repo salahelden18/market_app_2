@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_app_2/core/style/app_colors.dart';
 import '../../../../../core/style/font_style.dart';
 
 class CategorySection extends StatelessWidget {
@@ -13,8 +14,11 @@ class CategorySection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: FontStyle.size22Black600,
+          style: FontStyle.size22Black600.copyWith(
+            color: AppColors.primaryColor,
+          ),
         ),
+        const SizedBox(height: 20),
         widget
       ],
     );

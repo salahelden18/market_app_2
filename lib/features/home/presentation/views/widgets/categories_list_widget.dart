@@ -36,10 +36,10 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+            crossAxisCount: 4,
             crossAxisSpacing: 10,
             mainAxisSpacing: 20,
-            mainAxisExtent: 150,
+            mainAxisExtent: 120,
           ),
           itemBuilder: (context, index) => CategoryListItemWidget(
             index: index,

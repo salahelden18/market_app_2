@@ -24,7 +24,8 @@ class HomeAddressContainer extends StatelessWidget {
         children: [
           Text(
             'Location',
-            style: FontStyle.size16AndLightGrey,
+            style:
+                FontStyle.size16AndLightGrey.copyWith(color: AppColors.black),
           ),
           const SizedBox(height: 5),
           Row(

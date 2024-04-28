@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
+import 'package:market_app_2/features/home/presentation/views/widgets/nav_bar_widget.dart';
 import '../view_models/bottm_nav_bar_cubit/bottom_nav_bar_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,14 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final navBar = context.watch<BottomNavBarCubit>();
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: AppColors.primaryColor,
-        unselectedItemColor: Colors.grey,
-        currentIndex: navBar.state,
-        onTap: navBar.onTap,
-        items: navBar.navbarItems,
-      ),
+      bottomNavigationBar: NavBar(context, navBar),
       body: navBar.pages[navBar.state],
     );
   }
