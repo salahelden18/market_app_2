@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'widgets/button_bottom_navigation_widget.dart';
 import '../../../../core/style/font_style.dart';
-import '../../../../core/utils/dialog_manager_overlay.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../model_views/basket_cubit.dart';
-import '../model_views/basket_states.dart';
 import 'widgets/basket_item_widget.dart';
 import '../../../../core/widget/not_authenticated_widget.dart';
 import '../../../authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
@@ -12,30 +11,40 @@ import '../../../authentication/presentation/model_views/auto_authenticate/auto_
 
 class BasketScreen extends StatelessWidget {
   const BasketScreen({super.key});
+  static const String routeName = '/basket-screen';
 
   @override
   Widget build(BuildContext context) {
+    final basketState = context.watch<BasketCubit>();
     final auth = context.watch<AutoAuthenticationCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Basket'),
-      ),
-      body: auth.state.authenticationState == AuthenticationStates.authenticated
-          ? BlocConsumer<BasketCubit, BasketStates>(
-              listener: (context, state) {
-                if (state.isLoading) {
-                  DialogManagerOverlay.showDialogWithMessage(context);
-                } else {
-                  DialogManagerOverlay.closeDialog();
+        actions: [
+          if (basketState.state.basket != null)
+            IconButton(
+              onPressed: () async {
+                //  TODO show alert dialog to indicate to the user if he is sure about deleting the item
+                if (basketState.state.basket != null) {
+                  await context
+                      .read<BasketCubit>()
+                      .clearBasket(basketState.state.basket!.id);
                 }
               },
-              builder: (context, state) {
-                if (state.isFirstLoading) {
+              icon: const Icon(Icons.delete_outline),
+            ),
+        ],
+      ),
+      bottomNavigationBar: const ButtonBottomNavigationBar(),
+      body: auth.state.authenticationState == AuthenticationStates.authenticated
+          ? Builder(
+              builder: (context) {
+                if (basketState.state.isFirstLoading) {
                   return const LoadingWidget();
                 } else {
-                  if (state.basket == null ||
-                      (state.basket != null &&
-                          state.basket!.basketProducts.isEmpty)) {
+                  if (basketState.state.basket == null ||
+                      (basketState.state.basket != null &&
+                          basketState.state.basket!.basketProducts.isEmpty)) {
                     return const Center(
                       child: Text(
                         'Your Basket is Empty',
@@ -47,9 +56,10 @@ class BasketScreen extends StatelessWidget {
                   return ListView.separated(
                     separatorBuilder: (context, index) =>
                         const SizedBox(height: 15),
-                    itemCount: state.basket!.basketProducts.length,
+                    itemCount: basketState.state.basket!.basketProducts.length,
                     itemBuilder: (context, index) => BasketItemWidget(
-                      basketProductModel: state.basket!.basketProducts[index],
+                      basketProductModel:
+                          basketState.state.basket!.basketProducts[index],
                     ),
                   );
                 }
