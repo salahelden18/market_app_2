@@ -7,20 +7,22 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(
-          child: HomeAddressContainer(),
-        ),
-        const SizedBox(width: 20),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.shopping_cart_outlined,
-            color: AppColors.primaryColor,
+    return SafeArea(
+      child: Row(
+        children: [
+          const Expanded(
+            child: HomeAddressContainer(),
           ),
-        ),
-      ],
+          const SizedBox(width: 20),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+              color: AppColors.primaryColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -55,13 +55,16 @@ class _ProductsScreenState extends State<ProductsScreen>
         bottom: TabBar(
           labelColor: AppColors.fifthColor,
           indicatorColor: AppColors.warningColor,
-          unselectedLabelColor: Colors.grey,
+          unselectedLabelColor: Colors.white70,
           tabAlignment: TabAlignment.start,
           isScrollable: true,
           controller: tabController,
           tabs: List.generate(
             categories.length,
-            (index) => Text(categories[index].category.enName),
+            (index) => Padding(
+              padding: const EdgeInsetsDirectional.only(bottom: 5),
+              child: Text(categories[index].category.enName),
+            ),
           ),
         ),
       ),
