@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/home/presentation/views/widgets/nav_bar_widget.dart';
+import 'widgets/nav_bar_widget.dart';
 import '../view_models/bottm_nav_bar_cubit/bottom_nav_bar_cubit.dart';
 
 class HomeScreen extends StatelessWidget {

@@ -6,6 +6,7 @@ import 'package:market_app_2/features/address/presentation/views/add_address_scr
 import 'package:market_app_2/features/authentication/presentation/model_views/verifiy/verify_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/views/authentication_screen.dart';
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
+import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
@@ -56,6 +57,11 @@ Route<dynamic> generateRouter(RouteSettings settings) {
           BlocProvider(create: (ctx) => AddressCommonCubit(sl())),
           BlocProvider(create: (ctx) => AddEditAddressCubit(sl())),
         ], child: const AddAddresssScreen()),
+        settings: settings,
+      );
+    case BasketScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => const BasketScreen(),
         settings: settings,
       );
 

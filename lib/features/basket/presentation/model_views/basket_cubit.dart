@@ -14,14 +14,8 @@ class BasketCubit extends Cubit<BasketStates> {
     var result = await _basketRepo.getBasket(branchId);
 
     result.fold((l) {
-      print(l.message);
       emit(state.copyWith(isFirstLoading: false));
     }, (r) {
-      print('Basket');
-      print('**************');
-      print(r);
-      print('**************');
-
       emit(state.copyWith(isFirstLoading: false, basket: r));
     });
   }
@@ -74,9 +68,11 @@ class BasketCubit extends Cubit<BasketStates> {
     var result = await _basketRepo.clearBasket(basketId);
 
     result.fold(
-      (l) => null,
+      (l) {
+        print(l.message);
+      },
       (r) => emit(
-        state.copyWith(isLoading: false, basket: r),
+        const BasketStates(),
       ),
     );
   }
