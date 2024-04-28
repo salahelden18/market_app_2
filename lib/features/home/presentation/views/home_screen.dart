@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
+import '../../../../core/style/app_colors.dart';
 import '../view_models/bottm_nav_bar_cubit/bottom_nav_bar_cubit.dart';
 
 class HomeScreen extends StatelessWidget {

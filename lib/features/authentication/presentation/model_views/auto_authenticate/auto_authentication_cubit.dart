@@ -10,6 +10,9 @@ class AutoAuthenticationCubit extends Cubit<AutoAuthenticationState> {
   final SharedPreferencesService _sharedPreferencesService;
 
   Future authenticateUser() async {
+    print('---------------------------------');
+    print('Executing Executing');
+    print('---------------------------------');
     emit(state.copyWith(authenticationState: AuthenticationStates.loading));
 
     var token =
