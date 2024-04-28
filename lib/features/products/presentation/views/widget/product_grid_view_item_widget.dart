@@ -29,11 +29,10 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final String heroTag =
-        'product-image-${widget.branchProductModel.product!.id}';
-    int stock = widget.branchProductModel.stock;
     final isfavProduct = isProductInFavorite();
-    const double buttonSize = 23;
+    final String heroTag =
+        'product-image-hero-tag-${widget.branchProductModel.id}';
+    int stock = widget.branchProductModel.stock;
 
     return InkWell(
       onTap: () {
@@ -72,7 +71,7 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                 ),
                 const SizedBox(height: 10),
                 // Add to cart button
-                addToCartButtonWidget(buttonSize),
+                addToCartButtonWidget(),
                 const SizedBox(height: 10),
                 //
                 Text(
@@ -93,8 +92,8 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
             child: Padding(
               padding: const EdgeInsets.all(12.5),
               child: SizedBox(
-                height: 15,
-                width: 15,
+                height: 20,
+                width: 20,
                 child: GestureDetector(
                   onTap: () async {
                     setState(() {
@@ -133,8 +132,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
     );
   }
 
-  Center addToCartButtonWidget(double buttonSize) {
+  Center addToCartButtonWidget() {
     bool addToCartLoading = false;
+    const double buttonSize = 23;
     return Center(
       child: AnimatedContainer(
         duration: Duration(milliseconds: _animationDuration),
@@ -160,7 +160,7 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                     duration: Duration(milliseconds: _animationDuration),
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       '-',
                       style: TextStyle(
@@ -195,12 +195,12 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                               : Center(
                                   child: Text(
                                   _quantity.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: buttonSize * .7,
                                   ),
                                 ))
-                          : Icon(
+                          : const Icon(
                               Icons.add,
                               size: buttonSize * .8,
                             ),
@@ -218,7 +218,7 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       size: buttonSize * .7,
                       color: AppColors.white,

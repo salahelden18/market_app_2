@@ -78,7 +78,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     // Product price
                     Text(
-                      branchProductModel.price.toString(),
+                      '${branchProductModel.price.toString()} ₺',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

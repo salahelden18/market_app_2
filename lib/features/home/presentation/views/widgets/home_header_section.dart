@@ -23,7 +23,7 @@ class HomeHeaderSection extends StatelessWidget {
                     basketCubit.state.basket?.basketProducts != null
                 ? basketCubit.state.basket!.basketProducts.length.toString()
                 : '0'),
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor: AppColors.errorColor,
             isLabelVisible: basketCubit.state.basket != null &&
                 basketCubit.state.basket?.basketProducts != null &&
                 basketCubit.state.basket!.basketProducts.isNotEmpty,

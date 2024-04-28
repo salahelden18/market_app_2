@@ -62,7 +62,7 @@ class _ProductsScreenState extends State<ProductsScreen>
           tabs: List.generate(
             categories.length,
             (index) => Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 5),
+              padding: const EdgeInsetsDirectional.only(bottom: 8),
               child: Text(categories[index].category.enName),
             ),
           ),

@@ -53,9 +53,7 @@ class BasketScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  return ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 15),
+                  return ListView.builder(
                     itemCount: basketState.state.basket!.basketProducts.length,
                     itemBuilder: (context, index) => BasketItemWidget(
                       basketProductModel:
