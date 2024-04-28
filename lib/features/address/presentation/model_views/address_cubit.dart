@@ -19,7 +19,7 @@ class AddressCubit extends Cubit<AddressStates> {
 
     await result.fold(
       (l) async {
-        emit(state.copyWith(errorMessage: l.message));
+        emit(state.copyWith(errorMessage: l.message, hasError: true));
       },
       (r) async {
         if (r != null) {
@@ -38,6 +38,7 @@ class AddressCubit extends Cubit<AddressStates> {
             state.copyWith(
               isLoading: false,
               errorMessage: null,
+              hasError: false,
               addresses: r,
               selectedAddress: selectedAddress,
             ),
@@ -45,5 +46,33 @@ class AddressCubit extends Cubit<AddressStates> {
         }
       },
     );
+  }
+
+  Future selectAddress(AddressModel addressModel) async {
+    await _sharedPreferencesService.setData<String>(
+        StringConstants.addresssId, addressModel.id);
+
+    emit(state.copyWith(selectedAddress: addressModel));
+  }
+
+  Future addAddress(AddressModel addressModel) async {
+    await _sharedPreferencesService.setData<String>(
+        StringConstants.addresssId, addressModel.id);
+
+    List<AddressModel> addresses = List<AddressModel>.from(state.addresses)
+      ..add(addressModel);
+
+    emit(state.copyWith(addresses: addresses, selectedAddress: addressModel));
+  }
+
+  Future updateAddress(AddressModel addressModel) async {
+    await _sharedPreferencesService.setData<String>(
+        StringConstants.addresssId, addressModel.id);
+
+    var addresses = state.addresses
+        .map((e) => e.id == addressModel.id ? addressModel : e)
+        .toList();
+
+    emit(state.copyWith(addresses: addresses, selectedAddress: addressModel));
   }
 }

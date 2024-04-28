@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:market_app_2/features/address/data/models/address_common_model.dart';
 
 class AddressModel extends Equatable {
   final String id;
@@ -13,6 +14,10 @@ class AddressModel extends Equatable {
   final String? cityId;
   final String? districtId;
   final String? subDistrictId;
+  final AddressCommonModel? country;
+  final AddressCommonModel? city;
+  final AddressCommonModel? district;
+  final AddressCommonModel? subDistrict;
 
   const AddressModel({
     required this.id,
@@ -27,14 +32,18 @@ class AddressModel extends Equatable {
     required this.cityId,
     required this.districtId,
     required this.subDistrictId,
+    required this.district,
+    required this.city,
+    required this.country,
+    required this.subDistrict,
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
       id: json['id'],
       fullAddress: json['fullAddress'],
-      lat: json['lat'],
-      lng: json['lng'],
+      lat: double.tryParse(json['lat'].toString()) ?? 0,
+      lng: double.tryParse(json['lng'].toString()) ?? 0,
       additionalInfo: json['additionalInfo'],
       apartment: json['apartment'],
       floor: json['apartment'],
@@ -43,6 +52,10 @@ class AddressModel extends Equatable {
       cityId: json['cityId'],
       districtId: json['districtId'],
       subDistrictId: json['subDistrictId'],
+      country: AddressCommonModel.fromJson(json['country']),
+      city: AddressCommonModel.fromJson(json['city']),
+      district: AddressCommonModel.fromJson(json['district']),
+      subDistrict: AddressCommonModel.fromJson(json['subDistrict']),
     );
   }
 
@@ -75,6 +88,10 @@ class AddressModel extends Equatable {
         countryId,
         cityId,
         districtId,
-        subDistrictId
+        subDistrictId,
+        country,
+        city,
+        district,
+        subDistrict,
       ];
 }

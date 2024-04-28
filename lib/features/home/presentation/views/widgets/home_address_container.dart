@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/address/presentation/model_views/address_cubit.dart';
-import 'package:market_app_2/features/address/presentation/views/add_address_screen.dart';
-import 'package:market_app_2/features/home/presentation/view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
+import '../../../../../core/utils/show_modal_sheet.dart';
+import '../../../../../core/utils/show_toast.dart';
+import '../../../../address/presentation/model_views/address_cubit.dart';
+import '../../../../address/presentation/views/add_address_screen.dart';
+import '../../../../authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
+import '../../../../authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
+import '../../view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
+import 'address_sheet_widget.dart';
 import '../../../../../core/style/app_colors.dart';
 import '../../../../../core/style/font_style.dart';
 
@@ -16,8 +20,26 @@ class HomeAddressContainer extends StatelessWidget {
     final location = context.read<LocationAndGpsCubit>();
 
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(AddAddresssScreen.routeName);
+      onTap: () async {
+        final auth = context.read<AutoAuthenticationCubit>();
+        final address = context.read<AddressCubit>();
+
+        if (auth.state.authenticationState ==
+            AuthenticationStates.authenticated) {
+          if (address.state.addresses.isEmpty) {
+            Navigator.of(context).pushNamed(AddAddresssScreen.routeName);
+          } else {
+            await showModalSheet(
+              context,
+              const AddressSheetWidget(),
+            );
+          }
+        } else {
+          showToast(
+            context: context,
+            msg: 'Please login first',
+          );
+        }
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,12 +58,13 @@ class HomeAddressContainer extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    getAddressText(address, location),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
+                fit: FlexFit.loose,
+                child: Text(
+                  getAddressText(address, location),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               const SizedBox(width: 5),
               const Icon(
                 Icons.keyboard_arrow_down_outlined,

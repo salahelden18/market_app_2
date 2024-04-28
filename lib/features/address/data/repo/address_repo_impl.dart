@@ -73,7 +73,10 @@ class AddressRepoImpl implements AddressRepo {
   @override
   Future<Either<HttpFailure, AddressModel?>> editAddress(
       String addressId, AddressRequestModel addressRequestModel) async {
-    // TODO: implement editAddress
-    throw UnimplementedError();
+    return await _httpServiceInterface.patch(
+      url: '${EndPointConstants.addressBase}/$addressId',
+      fromJson: (decodedJson) => AddressModel.fromJson(decodedJson),
+      body: addressRequestModel.toJson(),
+    );
   }
 }

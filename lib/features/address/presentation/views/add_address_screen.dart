@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/address/data/models/address_request_model.dart';
-import 'package:market_app_2/features/address/presentation/model_views/add_edit_address/add_edit_address_cubit.dart';
-import 'package:market_app_2/features/address/presentation/model_views/add_edit_address/add_edit_address_states.dart';
-import 'package:market_app_2/features/home/presentation/view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
+import '../../data/models/address_model.dart';
+import '../../data/models/address_request_model.dart';
+import '../model_views/add_edit_address/add_edit_address_cubit.dart';
+import '../model_views/add_edit_address/add_edit_address_states.dart';
+import '../model_views/address_cubit.dart';
+import '../../../home/presentation/view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
 import '../../../../core/widget/filled_button_widget.dart';
 import '../../../../core/style/font_style.dart';
 import '../../../../core/utils/dialog_manager_overlay.dart';
@@ -36,19 +38,34 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
   final TextEditingController fullAddressController = TextEditingController();
   final TextEditingController additionalInfoController =
       TextEditingController();
+  bool isExecuted = false;
+  AddressModel? addressModel;
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    setState(() {
-      isLoading = true;
-    });
+    if (!isExecuted) {
+      addressModel =
+          ModalRoute.of(context)?.settings.arguments as AddressModel?;
 
-    await context.read<AddressCommonCubit>().getCountries();
+      // adding the fields if it is exist
+      apartmentController.text = addressModel?.apartment ?? '';
+      floorController.text = addressModel?.floor ?? '';
+      flatController.text =
+          '${addressModel?.flatNumber != null ? addressModel!.flatNumber : ''}';
+      fullAddressController.text = addressModel?.fullAddress ?? '';
+      additionalInfoController.text = addressModel?.additionalInfo ?? '';
+      setState(() {
+        isLoading = true;
+      });
 
-    setState(() {
-      isLoading = false;
-    });
+      await context.read<AddressCommonCubit>().getCountries();
+
+      setState(() {
+        isLoading = false;
+      });
+      isExecuted = true;
+    }
   }
 
   @override
@@ -65,7 +82,7 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Address'),
+        title: Text(addressModel == null ? 'Add Address' : 'Edit Address'),
       ),
       body: isLoading
           ? const LoadingWidget()
@@ -86,37 +103,38 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
                   child: ListView(
                     padding: const EdgeInsets.all(10),
                     children: [
-                      // Country
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Country',
-                            style: FontStyle.size22Black600,
-                          ),
-                          DropdownButtonFormFieldWidget(
-                            hint: 'Select Country',
-                            selectedValue: selectedCountryId,
-                            items: state.countries
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(e.enName),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (newValue) {
-                              if (selectedCountryId != newValue) {
-                                selectedCountryId = newValue;
-                                context
-                                    .read<AddressCommonCubit>()
-                                    .getCities(newValue);
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                        ],
-                      ),
+                      if (addressModel == null)
+                        // Country
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Country',
+                              style: FontStyle.size22Black600,
+                            ),
+                            DropdownButtonFormFieldWidget(
+                              hint: 'Select Country',
+                              selectedValue: selectedCountryId,
+                              items: state.countries
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e.id,
+                                      child: Text(e.enName),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (newValue) {
+                                if (selectedCountryId != newValue) {
+                                  selectedCountryId = newValue;
+                                  context
+                                      .read<AddressCommonCubit>()
+                                      .getCities(newValue);
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
                       // City
                       if (state.countries.isNotEmpty &&
                           selectedCountryId != null)
@@ -215,7 +233,7 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
                           ],
                         ),
                       // the additional fields
-                      if (selectedSubDistrictId != null)
+                      if (selectedSubDistrictId != null || addressModel != null)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -293,18 +311,33 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
                                   showToast(
                                       context: context,
                                       msg: state.errorMessage);
-                                } else {
-                                  // TODO Add the item to the list of addresses or edit it
+                                } else if (state
+                                    is AddEditAddressSuccessState) {
+                                  if (addressModel == null) {
+                                    context
+                                        .read<AddressCubit>()
+                                        .addAddress(state.address);
+                                  } else {
+                                    context
+                                        .read<AddressCubit>()
+                                        .updateAddress(state.address);
+                                  }
 
                                   DialogManagerOverlay.closeDialog();
                                   Navigator.pop(context);
+                                } else {
+                                  DialogManagerOverlay.closeDialog();
                                 }
                               },
                               child: SizedBox(
                                 width: double.infinity,
                                 child: FilledButtonWidget(
-                                  onPress: onTap,
-                                  widget: const Text('Add Address'),
+                                  onPress: () => onTap(addressModel),
+                                  widget: Text(
+                                    addressModel == null
+                                        ? 'Add Address'
+                                        : 'Edit Address',
+                                  ),
                                 ),
                               ),
                             ),
@@ -319,7 +352,7 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
     );
   }
 
-  Future onTap() async {
+  Future onTap(AddressModel? addressModel) async {
     final isValid = _formKey.currentState!.validate();
 
     if (isValid) {
@@ -334,11 +367,13 @@ class _AddAddresssScreenState extends State<AddAddresssScreen> {
         cityId: selectedCityId,
         districtId: selectedDistrictId,
         subDistrictId: selectedSubDistrictId,
-        lat: location.currentLocation?.lat ?? 0,
-        lng: location.currentLocation?.lng ?? 0,
+        lat: addressModel == null ? location.currentLocation?.lat ?? 0 : null,
+        lng: addressModel == null ? location.currentLocation?.lng ?? 0 : null,
       );
 
-      await context.read<AddEditAddressCubit>().addEditAddress(model);
+      await context
+          .read<AddEditAddressCubit>()
+          .addEditAddress(model, addressModel?.id);
     }
   }
 }
