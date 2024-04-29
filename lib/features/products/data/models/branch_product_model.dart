@@ -19,6 +19,8 @@ class BranchProductModel extends Equatable {
   });
 
   factory BranchProductModel.fromJson(Map<String, dynamic> json) {
+    print('here in branch produuct model');
+
     return BranchProductModel(
       id: json['id'],
       stock: json['stock'],

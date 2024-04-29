@@ -29,7 +29,6 @@ class ButtonBottomNavigationBar extends StatelessWidget {
             ),
             child: FilledButtonWidget(
               onPress: () {
-                // TODO make check to see if the user is authenticated or not
                 Navigator.of(context).pushNamed(OrderScreen.routeName);
               },
               widget: Row(

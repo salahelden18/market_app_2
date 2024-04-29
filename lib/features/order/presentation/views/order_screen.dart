@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/basket/presentation/views/widgets/basket_item_widget.dart';
+import 'package:market_app_2/features/order/presentation/views/widgets/order_button_widget.dart';
 import '../../../../core/widget/loading_widget.dart';
+import '../../../basket/presentation/model_views/basket_cubit.dart';
 import '../../../home/presentation/view_models/branch/branch_cubit.dart';
 import '../view_models/payment/payment_method_cubit.dart';
 import '../view_models/payment/payment_method_states.dart';
@@ -25,51 +28,76 @@ class _OrderScreenState extends State<OrderScreen> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     if (!isExecuted) {
-      setState(() {
-        isLoading = true;
-      });
       // getting the payment methods if it is not fetched before to skipping getting it each time we enter here
       final paymentState = context.read<PaymentMethodCubit>();
       if (paymentState.state is! PaymentMethodSuccessState) {
+        setState(() {
+          isLoading = true;
+        });
         await context.read<PaymentMethodCubit>().getPaymentMethods(
             context.read<BranchCubit>().state.branchModel!.id);
-
         setState(() {
           isLoading = false;
         });
       }
+
       isExecuted = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final basketState = context.watch<BasketCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order'),
       ),
+      bottomNavigationBar:
+          isLoading ? const SizedBox() : const OrderButtonWidget(),
       body: isLoading
           ? const LoadingWidget()
           : ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              children: const [
+              children: [
                 // Address Section
-                OrderSection(
+                const OrderSection(
                   title: 'Address',
                   widget: OrderAddressSection(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // payment method section
-                OrderSection(
+                const OrderSection(
                   title: 'Payment Method',
                   widget: OrderPaymentMethodWidget(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // products section
-                // TODO add the products seciton here
-                // payment summary section
                 OrderSection(
+                  title: 'Products',
+                  widget: Column(
+                    children: List.generate(
+                      basketState.state.basket!.basketProducts.length,
+                      (index) => basketState.state.basket!.basketProducts[index]
+                                  .branchProductModel !=
+                              null
+                          ? Column(
+                              children: [
+                                BasketItemWidget(
+                                  basketProductModel: basketState
+                                      .state.basket!.basketProducts[index],
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            )
+                          : const SizedBox(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // payment summary section
+                const OrderSection(
                   title: 'Payment Summary',
                   widget: OrderPaymentSummary(),
                 ),

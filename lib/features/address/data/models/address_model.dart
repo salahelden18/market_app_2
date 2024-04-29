@@ -39,6 +39,7 @@ class AddressModel extends Equatable {
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
+    print('Here in address model');
     return AddressModel(
       id: json['id'],
       fullAddress: json['fullAddress'],
@@ -52,10 +53,18 @@ class AddressModel extends Equatable {
       cityId: json['cityId'],
       districtId: json['districtId'],
       subDistrictId: json['subDistrictId'],
-      country: AddressCommonModel.fromJson(json['country']),
-      city: AddressCommonModel.fromJson(json['city']),
-      district: AddressCommonModel.fromJson(json['district']),
-      subDistrict: AddressCommonModel.fromJson(json['subDistrict']),
+      country: json['country'] != null
+          ? AddressCommonModel.fromJson(json['country'])
+          : null,
+      city: json['city'] != null
+          ? AddressCommonModel.fromJson(json['city'])
+          : null,
+      district: json['district'] != null
+          ? AddressCommonModel.fromJson(json['district'])
+          : null,
+      subDistrict: json['subDistrict'] != null
+          ? AddressCommonModel.fromJson(json['subDistrict'])
+          : null,
     );
   }
 

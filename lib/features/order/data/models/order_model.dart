@@ -33,7 +33,9 @@ class OrderModel extends Equatable {
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    print('Here in order model');
     return OrderModel(
+      loadCurrentActiveOrders: json['loadCurrentActiveOrders'],
       id: json['id'],
       orderId: json['orderId'],
       totalPrice: double.tryParse(json['totalPrice'].toString()) ?? 0.0,
@@ -58,7 +60,6 @@ class OrderModel extends Equatable {
               ),
             )
           : [],
-      loadCurrentActiveOrders: json['loadCurrentActiveOrders'],
     );
   }
 

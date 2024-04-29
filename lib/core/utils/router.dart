@@ -8,7 +8,7 @@ import 'package:market_app_2/features/authentication/presentation/views/authenti
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
 import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
-import 'package:market_app_2/features/order/presentation/view_models/orders/order_cubit.dart';
+import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_cubit.dart';
 import 'package:market_app_2/features/order/presentation/views/order_screen.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
@@ -16,6 +16,10 @@ import 'package:market_app_2/features/products/presentation/views/products_scree
 import 'package:market_app_2/loading_data_screen.dart';
 import 'package:market_app_2/not_found_screen.dart';
 import 'package:market_app_2/service_locator.dart';
+
+import '../../features/order/presentation/view_models/order_details_cubit.dart/order_details_cubit.dart';
+import '../../features/order/presentation/views/order_tracking_screen.dart';
+import '../../features/order/presentation/views/orders_history_screen.dart';
 
 Route<dynamic> generateRouter(RouteSettings settings) {
   switch (settings.name) {
@@ -69,7 +73,19 @@ Route<dynamic> generateRouter(RouteSettings settings) {
     case OrderScreen.routeName:
       return MaterialPageRoute(
         builder: (ctx) => BlocProvider(
-            create: (ctx) => OrderCubit(sl()), child: const OrderScreen()),
+            create: (ctx) => AddOrderCubit(sl()), child: const OrderScreen()),
+        settings: settings,
+      );
+    case OrdersHistoryScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => const OrdersHistoryScreen(),
+        settings: settings,
+      );
+    case OrderTrackingScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => BlocProvider(
+            create: (ctx) => OrderDetailsCubit(sl()),
+            child: const OrderTrackingScreen()),
         settings: settings,
       );
 

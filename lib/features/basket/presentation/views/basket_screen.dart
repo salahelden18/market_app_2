@@ -24,7 +24,6 @@ class BasketScreen extends StatelessWidget {
           if (basketState.state.basket != null)
             IconButton(
               onPressed: () async {
-                //  TODO show alert dialog to indicate to the user if he is sure about deleting the item
                 if (basketState.state.basket != null) {
                   await context
                       .read<BasketCubit>()
@@ -55,10 +54,14 @@ class BasketScreen extends StatelessWidget {
                   }
                   return ListView.builder(
                     itemCount: basketState.state.basket!.basketProducts.length,
-                    itemBuilder: (context, index) => BasketItemWidget(
-                      basketProductModel:
-                          basketState.state.basket!.basketProducts[index],
-                    ),
+                    itemBuilder: (context, index) => basketState.state.basket!
+                                .basketProducts[index].branchProductModel !=
+                            null
+                        ? BasketItemWidget(
+                            basketProductModel:
+                                basketState.state.basket!.basketProducts[index],
+                          )
+                        : const SizedBox(),
                   );
                 }
               },

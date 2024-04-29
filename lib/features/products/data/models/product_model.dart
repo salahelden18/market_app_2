@@ -30,6 +30,8 @@ class ProductModel extends Equatable {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    print('here in product  model');
+
     return ProductModel(
       id: json['id'],
       enName: json['enName'],

@@ -16,6 +16,7 @@ class PaymentMethodModel extends Equatable {
   });
 
   factory PaymentMethodModel.fromJson(Map<String, dynamic> json) {
+    print('Here in payment method model');
     return PaymentMethodModel(
       arName: json['arName'],
       createdAt: json['createdAt'],

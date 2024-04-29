@@ -11,7 +11,7 @@ class BasketItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String heroTag =
-        'product-image-hero-tag-${basketProductModel.branchProductModel.id}';
+        'product-image-hero-tag-${basketProductModel.branchProductModel?.id}';
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
@@ -35,7 +35,7 @@ class BasketItemWidget extends StatelessWidget {
                 child: Hero(
                   tag: heroTag,
                   child: Image.network(
-                    basketProductModel.branchProductModel.product!.images[0],
+                    basketProductModel.branchProductModel!.product!.images[0],
                   ),
                 ),
               ),
@@ -45,7 +45,7 @@ class BasketItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      basketProductModel.branchProductModel.product!.enName,
+                      basketProductModel.branchProductModel!.product!.enName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -56,14 +56,14 @@ class BasketItemWidget extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       basketProductModel
-                              .branchProductModel.product?.enDescription ??
+                              .branchProductModel!.product?.enDescription ??
                           '',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                        '${basketProductModel.branchProductModel.price.toString()} ₺'),
+                        '${basketProductModel.branchProductModel!.price.toString()} ₺'),
                   ],
                 ),
               ),
@@ -107,9 +107,17 @@ class BasketItemWidget extends StatelessWidget {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () async {
-                        await context
-                            .read<BasketCubit>()
-                            .decreaseQuantity(basketProductModel.id);
+                        print('Entered the on Tap in the delete part');
+                        print(basketProductModel.quantity);
+                        if (basketProductModel.quantity == 1) {
+                          await context
+                              .read<BasketCubit>()
+                              .deleteItem(basketProductModel.id);
+                        } else {
+                          await context
+                              .read<BasketCubit>()
+                              .decreaseQuantity(basketProductModel.id);
+                        }
                       },
                       child: Container(
                           clipBehavior: Clip.antiAlias,
@@ -120,8 +128,11 @@ class BasketItemWidget extends StatelessWidget {
                               bottomEnd: Radius.circular(5),
                             ),
                           ),
-                          child:
-                              const Icon(Icons.remove, color: AppColors.white)),
+                          child: Icon(
+                              basketProductModel.quantity == 1
+                                  ? Icons.delete
+                                  : Icons.remove,
+                              color: AppColors.white)),
                     ),
                   ],
                 ),

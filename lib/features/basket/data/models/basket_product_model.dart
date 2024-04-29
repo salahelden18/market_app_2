@@ -5,7 +5,7 @@ class BasketProductModel extends Equatable {
   final int id;
   final int quantity;
   final String addedAt;
-  final BranchProductModel branchProductModel;
+  final BranchProductModel? branchProductModel;
 
   const BasketProductModel({
     required this.addedAt,
@@ -15,9 +15,13 @@ class BasketProductModel extends Equatable {
   });
 
   factory BasketProductModel.fromJson(Map<String, dynamic> json) {
+    print('here in basket product model');
+
     return BasketProductModel(
       addedAt: json['addedAt'],
-      branchProductModel: BranchProductModel.fromJson(json['branchProduct']),
+      branchProductModel: json['branchProduct'] != null
+          ? BranchProductModel.fromJson(json['branchProduct'])
+          : null,
       id: json['id'],
       quantity: json['quantity'],
     );

@@ -6,8 +6,8 @@ import 'package:market_app_2/features/address/presentation/model_views/address_c
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/order/data/models/order_request_model.dart';
-import 'package:market_app_2/features/order/presentation/view_models/orders/order_cubit.dart';
-import 'package:market_app_2/features/order/presentation/view_models/orders/order_states.dart';
+import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_cubit.dart';
+import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_states.dart';
 import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_states.dart';
 
@@ -18,14 +18,14 @@ class OrderButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OrderCubit, OrderStates>(
+    return BlocListener<AddOrderCubit, AddOrderStates>(
       listener: (context, state) {
-        if (state is OrderLoadingState) {
+        if (state is AddOrderLoadingState) {
           DialogManagerOverlay.showDialogWithMessage(context);
-        } else if (state is OrderFailureState) {
+        } else if (state is AddOrderFailureState) {
           DialogManagerOverlay.closeDialog();
           showToast(context: context, msg: state.errorMessage);
-        } else if (state is OrderSuccessState) {
+        } else if (state is AddOrderSuccessState) {
           // TODO call active orders, basket
           DialogManagerOverlay.closeDialog();
           Navigator.of(context)
@@ -57,7 +57,7 @@ class OrderButtonWidget extends StatelessWidget {
                   .id,
             );
 
-            context.read<OrderCubit>().order(orderRequestModel);
+            context.read<AddOrderCubit>().order(orderRequestModel);
           },
           widget: const Text('Order'),
         ),

@@ -40,4 +40,7 @@ class EndPointConstants {
 
   // payments
   static const String paymentBase = "$_baseUrl/BranchPaymentMethod/Branch";
+
+  // orders
+  static const String orderBase = "$_baseUrl/Order";
 }

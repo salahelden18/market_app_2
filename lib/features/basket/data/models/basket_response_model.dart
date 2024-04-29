@@ -17,6 +17,7 @@ class BasketReponseModel extends Equatable {
   });
 
   factory BasketReponseModel.fromJson(Map<String, dynamic> json) {
+    print('here in basket response model');
     return BasketReponseModel(
       customerId: json['customerid'],
       id: json['id'],

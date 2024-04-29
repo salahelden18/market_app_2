@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/order/presentation/view_models/order_history_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
+import 'core/services/navigator_observer.dart';
 import 'core/style/theme.dart';
 import 'core/utils/router.dart';
 import 'features/address/presentation/model_views/address_cubit.dart';
@@ -14,6 +16,7 @@ import 'features/home/presentation/view_models/bottm_nav_bar_cubit/bottom_nav_ba
 import 'features/home/presentation/view_models/branch/branch_cubit.dart';
 import 'features/home/presentation/view_models/categories/categories_cubit.dart';
 import 'features/home/presentation/view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
+import 'features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
 import 'splash_screen.dart';
 import 'service_locator.dart' as di;
 
@@ -50,8 +53,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => FavoritesCubit(di.sl())),
         BlocProvider(create: (ctx) => BasketCubit(di.sl())),
         BlocProvider(create: (ctx) => PaymentMethodCubit(di.sl())),
+        BlocProvider(create: (ctx) => CurrentActiveOrderCubit(di.sl())),
+        BlocProvider(
+          create: (ctx) => OrderHistoryCubit(di.sl()),
+        ),
       ],
       child: MaterialApp(
+        navigatorObservers: [MyRouteObserver()],
         title: 'Market App',
         theme: appTheme,
         debugShowCheckedModeBanner: false,
