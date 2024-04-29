@@ -6,10 +6,7 @@ import '../../../../basket/presentation/model_views/basket_cubit.dart';
 import '../../../../basket/presentation/views/basket_screen.dart';
 
 class BasketBadgeWidget extends StatelessWidget {
-  const BasketBadgeWidget({
-    super.key,
-    this.color,
-  });
+  const BasketBadgeWidget({super.key, this.color});
   final Color? color;
   @override
   Widget build(BuildContext context) {
