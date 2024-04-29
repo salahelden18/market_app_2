@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
 import 'package:market_app_2/features/home/presentation/view_models/categories/categories_cubit.dart';
 import 'package:market_app_2/features/home/presentation/view_models/categories/categories_states.dart';
+import 'package:market_app_2/features/home/presentation/views/widgets/basket_badge_widget.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/widget/tab_bar_view_item_widget.dart';
 
@@ -52,6 +53,11 @@ class _ProductsScreenState extends State<ProductsScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products'),
+        actions: const [
+          BasketBadgeWidget(
+            color: Colors.white,
+          ),
+        ],
         bottom: TabBar(
           labelColor: AppColors.fifthColor,
           indicatorColor: AppColors.warningColor,

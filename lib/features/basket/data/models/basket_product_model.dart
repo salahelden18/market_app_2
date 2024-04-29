@@ -15,8 +15,6 @@ class BasketProductModel extends Equatable {
   });
 
   factory BasketProductModel.fromJson(Map<String, dynamic> json) {
-    print('here in basket product model');
-
     return BasketProductModel(
       addedAt: json['addedAt'],
       branchProductModel: json['branchProduct'] != null

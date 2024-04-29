@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
-import 'package:market_app_2/core/utils/show_toast.dart';
-import 'package:market_app_2/core/widget/loading_widget.dart';
-import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
-import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
-import 'package:market_app_2/features/products/presentation/views/widget/no_stock_widget.dart';
+import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
+import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
+import '../../../../basket/data/models/basket_product_model.dart';
+import '../../../../basket/presentation/model_views/basket_cubit.dart';
+import '../../../../../core/style/app_colors.dart';
+import '../../../../../core/utils/show_toast.dart';
+import '../../../../../core/widget/loading_widget.dart';
+import '../../../../favorite/presentation/model_views/favorites_cubit.dart';
+import '../product_details_screen.dart';
+import 'no_stock_widget.dart';
 import '../../../../../core/style/font_style.dart';
 import '../../../../favorite/data/models/favorite_model.dart';
 import '../../../data/models/branch_product_model.dart';
@@ -24,11 +28,14 @@ class ProductGridViewItemWidget extends StatefulWidget {
 class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
   bool isLoading = false;
   //Todo: product quantity
-  int _quantity = 0;
   final int _animationDuration = 250;
 
   @override
   Widget build(BuildContext context) {
+    context.watch<BasketCubit>();
+    final basketProductModel = context
+        .watch<BasketCubit>()
+        .getBranchProduct(widget.branchProductModel.id);
     final isfavProduct = isProductInFavorite();
     final String heroTag =
         'product-image-hero-tag-${widget.branchProductModel.id}';
@@ -51,8 +58,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
               borderRadius: BorderRadiusDirectional.circular(10),
               color: Colors.white,
               border: Border.all(
-                  color: AppColors.primaryColor.withOpacity(.7),
-                  width: _quantity != 0 ? 2 : .5),
+                color: AppColors.primaryColor.withOpacity(.7),
+                width: basketProductModel != null ? 2 : .5,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +79,8 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                 ),
                 const SizedBox(height: 10),
                 // Add to cart button
-                addToCartButtonWidget(),
+                addToCartButtonWidget(
+                    basketProductModel, widget.branchProductModel.id),
                 const SizedBox(height: 10),
                 //
                 Text(
@@ -132,29 +141,38 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
     );
   }
 
-  Center addToCartButtonWidget() {
-    bool addToCartLoading = false;
+  Center addToCartButtonWidget(
+      BasketProductModel? basketProductModel, int branchProductId) {
     const double buttonSize = 23;
+
     return Center(
       child: AnimatedContainer(
         duration: Duration(milliseconds: _animationDuration),
         height: buttonSize,
-        width: _quantity != 0 ? buttonSize * 3 : buttonSize,
+        width: basketProductModel != null ? buttonSize * 3 : buttonSize,
         decoration: BoxDecoration(
-          color: _quantity != 0 ? AppColors.primaryColor : AppColors.white,
+          color: basketProductModel != null
+              ? AppColors.primaryColor
+              : AppColors.white,
           border: Border.all(),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           children: [
             //    Decrease quantity button
-            if (_quantity != 0)
+            if (basketProductModel != null)
               Expanded(
                 child: InkWell(
                   onTap: () async {
-                    setState(() {
-                      _quantity--;
-                    });
+                    if (basketProductModel.quantity == 1) {
+                      await context
+                          .read<BasketCubit>()
+                          .deleteItem(basketProductModel.id);
+                    } else {
+                      await context
+                          .read<BasketCubit>()
+                          .decreaseQuantity(basketProductModel.id);
+                    }
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),
@@ -176,45 +194,46 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
             Expanded(
               child: InkWell(
                 onTap: () async {
-                  setState(() {
-                    _quantity = 1;
-                  });
+                  // if it is equal to null we will make adding other wise will be increasing
+                  if (basketProductModel == null) {
+                    final branchId =
+                        context.read<BranchCubit>().state.branchModel!.id;
+                    context.read<BasketCubit>().addToBasket(BasketRequestModel(
+                        branchId: branchId, branchProductId: branchProductId));
+                  }
                 },
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: _animationDuration),
                   decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius:
-                        BorderRadius.circular(_quantity != 0 ? 0 : 10),
+                    borderRadius: BorderRadius.circular(
+                        basketProductModel != null ? 0 : 10),
                   ),
-                  child: addToCartLoading
-                      ? const LoadingWidget()
-                      : _quantity != 0
-                          ? addToCartLoading
-                              ? const LoadingWidget()
-                              : Center(
-                                  child: Text(
-                                  _quantity.toString(),
-                                  style: const TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: buttonSize * .7,
-                                  ),
-                                ))
-                          : const Icon(
-                              Icons.add,
-                              size: buttonSize * .8,
+                  child: basketProductModel != null
+                      ? Center(
+                          child: Text(
+                            basketProductModel.quantity.toString(),
+                            style: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: buttonSize * .7,
                             ),
+                          ),
+                        )
+                      : const Icon(
+                          Icons.add,
+                          size: buttonSize * .8,
+                        ),
                 ),
               ),
             ),
             // Increase quantity button
-            if (_quantity != 0)
+            if (basketProductModel != null)
               Expanded(
                 child: InkWell(
                   onTap: () async {
-                    setState(() {
-                      _quantity++;
-                    });
+                    context
+                        .read<BasketCubit>()
+                        .increaseQuantity(basketProductModel.id);
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),

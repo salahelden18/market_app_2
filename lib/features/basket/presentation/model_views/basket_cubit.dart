@@ -1,4 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:collection/collection.dart';
+
+import '../../data/models/basket_product_model.dart';
 import '../../data/models/basket_request_model.dart';
 import '../../data/repo/basket_repo.dart';
 import 'basket_states.dart';
@@ -76,5 +79,11 @@ class BasketCubit extends Cubit<BasketStates> {
         const BasketStates(),
       ),
     );
+  }
+
+  BasketProductModel? getBranchProduct(int branchProductId) {
+    var branchProduct = state.basket?.basketProducts.firstWhereOrNull(
+        (element) => element.branchProductModel?.id == branchProductId);
+    return branchProduct;
   }
 }
