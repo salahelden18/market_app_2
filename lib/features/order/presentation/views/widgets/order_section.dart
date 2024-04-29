@@ -18,6 +18,8 @@ class OrderSection extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColors.lightGray),

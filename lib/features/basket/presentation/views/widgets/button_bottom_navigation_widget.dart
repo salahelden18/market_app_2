@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/core/widget/filled_button_widget.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/order/presentation/views/order_screen.dart';
 
 class ButtonBottomNavigationBar extends StatelessWidget {
   const ButtonBottomNavigationBar({super.key});
@@ -27,7 +28,10 @@ class ButtonBottomNavigationBar extends StatelessWidget {
               ],
             ),
             child: FilledButtonWidget(
-              onPress: () {},
+              onPress: () {
+                // TODO make check to see if the user is authenticated or not
+                Navigator.of(context).pushNamed(OrderScreen.routeName);
+              },
               widget: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

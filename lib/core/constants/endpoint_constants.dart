@@ -37,4 +37,7 @@ class EndPointConstants {
 
   // subDistricts
   static const String subDistrictBase = "$_baseUrl/SubDistricts";
+
+  // payments
+  static const String paymentBase = "$_baseUrl/BranchPaymentMethod/Branch";
 }

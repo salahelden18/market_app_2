@@ -8,6 +8,8 @@ import 'package:market_app_2/features/authentication/presentation/views/authenti
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
 import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
+import 'package:market_app_2/features/order/presentation/view_models/orders/order_cubit.dart';
+import 'package:market_app_2/features/order/presentation/views/order_screen.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import 'package:market_app_2/features/products/presentation/views/products_screen.dart';
@@ -62,6 +64,12 @@ Route<dynamic> generateRouter(RouteSettings settings) {
     case BasketScreen.routeName:
       return MaterialPageRoute(
         builder: (ctx) => const BasketScreen(),
+        settings: settings,
+      );
+    case OrderScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => BlocProvider(
+            create: (ctx) => OrderCubit(sl()), child: const OrderScreen()),
         settings: settings,
       );
 

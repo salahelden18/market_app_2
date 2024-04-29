@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
 import 'core/style/theme.dart';
 import 'core/utils/router.dart';
 import 'features/address/presentation/model_views/address_cubit.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => SignupCubit(di.sl())),
         BlocProvider(create: (ctx) => FavoritesCubit(di.sl())),
         BlocProvider(create: (ctx) => BasketCubit(di.sl())),
+        BlocProvider(create: (ctx) => PaymentMethodCubit(di.sl())),
       ],
       child: MaterialApp(
         title: 'Market App',

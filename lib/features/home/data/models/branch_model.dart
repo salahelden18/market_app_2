@@ -10,7 +10,7 @@ class BranchModel extends Equatable {
   final String? enDetailedAddress;
   final String? arDetailedAddress;
   final String? trDetailedAddress;
-  final int? deliveryFees;
+  final double? deliveryFees;
   final int? deliveryTime;
   final int? minimumOrderValue;
   final int? maximumCoverAreaInKM;
@@ -43,7 +43,7 @@ class BranchModel extends Equatable {
       enDetailedAddress: json['enDetailedAddress'],
       arDetailedAddress: json['arDetailedAddress'],
       trDetailedAddress: json['trDetailedAddress'],
-      deliveryFees: json['deliveryFees'],
+      deliveryFees: double.tryParse(json['deliveryFees'].toString()),
       deliveryTime: json['deliveryTime'],
       minimumOrderValue: json['minimumOrderValue'],
       maximumCoverAreaInKM: json['maximumCoverAreaInKM'],
