@@ -10,71 +10,124 @@ class BasketItemWidget extends StatelessWidget {
   final BasketProductModel basketProductModel;
   @override
   Widget build(BuildContext context) {
+    final String heroTag =
+        'product-image-hero-tag-${basketProductModel.branchProductModel.id}';
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
-            arguments: basketProductModel.branchProductModel);
+            arguments: [basketProductModel.branchProductModel, heroTag]);
       },
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.lightGray),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 100,
-              child: Image.network(
-                basketProductModel.branchProductModel.product!.images[0],
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(basketProductModel.branchProductModel.product!.enName),
-                  const SizedBox(height: 5),
-                  Text(basketProductModel
-                          .branchProductModel.product?.enDescription ??
-                      ''),
-                  const SizedBox(height: 10),
-                  Text(basketProductModel.branchProductModel.price.toString()),
-                ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.primaryColor),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      await context
-                          .read<BasketCubit>()
-                          .increaseQuantity(basketProductModel.id);
-                    },
-                    child: const Icon(Icons.add),
+        child: Container(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 10,
+            vertical: 15,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.lightGray),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 100,
+                child: Hero(
+                  tag: heroTag,
+                  child: Image.network(
+                    basketProductModel.branchProductModel.product!.images[0],
                   ),
-                  const SizedBox(height: 5),
-                  Text(basketProductModel.quantity.toString()),
-                  const SizedBox(height: 5),
-                  GestureDetector(
-                    onTap: () async {
-                      await context
-                          .read<BasketCubit>()
-                          .decreaseQuantity(basketProductModel.id);
-                    },
-                    child: const Icon(Icons.remove),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      basketProductModel.branchProductModel.product!.enName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      basketProductModel
+                              .branchProductModel.product?.enDescription ??
+                          '',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                        '${basketProductModel.branchProductModel.price.toString()} ₺'),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(color: AppColors.primaryColor, width: 2),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        await context
+                            .read<BasketCubit>()
+                            .increaseQuantity(basketProductModel.id);
+                      },
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: const BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadiusDirectional.only(
+                            topStart: Radius.circular(5),
+                            topEnd: Radius.circular(5),
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      basketProductModel.quantity.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: AppColors.primaryColor),
+                    ),
+                    const SizedBox(height: 5),
+                    GestureDetector(
+                      onTap: () async {
+                        await context
+                            .read<BasketCubit>()
+                            .decreaseQuantity(basketProductModel.id);
+                      },
+                      child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadiusDirectional.only(
+                              bottomStart: Radius.circular(5),
+                              bottomEnd: Radius.circular(5),
+                            ),
+                          ),
+                          child:
+                              const Icon(Icons.remove, color: AppColors.white)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

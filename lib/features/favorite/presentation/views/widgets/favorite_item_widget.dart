@@ -19,6 +19,8 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding:
+          const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.lightGray),
         borderRadius: BorderRadius.circular(10),
@@ -43,7 +45,7 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
                     style: FontStyle.size22Black600,
                   ),
                   if (widget.favoriteModel.product.enDescription != null)
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                   if (widget.favoriteModel.product.enDescription != null)
                     Text(widget.favoriteModel.product.enDescription!),
                 ],
@@ -52,25 +54,29 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: GestureDetector(
-              onTap: () async {
-                setState(() {
-                  isLoading = true;
-                });
+            child: SizedBox(
+              height: 20,
+              width: 20,
+              child: GestureDetector(
+                onTap: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
 
-                await context
-                    .read<FavoritesCubit>()
-                    .deleteFromFavorites(widget.favoriteModel.id);
-                setState(() {
-                  isLoading = false;
-                });
-              },
-              child: isLoading
-                  ? const LoadingWidget()
-                  : const Icon(
-                      Icons.delete_outline,
-                      color: AppColors.errorColor,
-                    ),
+                  await context
+                      .read<FavoritesCubit>()
+                      .deleteFromFavorites(widget.favoriteModel.id);
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                child: isLoading
+                    ? const LoadingWidget()
+                    : const Icon(
+                        Icons.favorite,
+                        color: AppColors.primaryColor,
+                      ),
+              ),
             ),
           ),
         ],

@@ -91,10 +91,10 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20,
                             mainAxisSpacing: 20,
-                            mainAxisExtent: 160,
+                            mainAxisExtent: 190,
                           ),
                           itemBuilder: (ctx, index) =>
                               ProductGridViewItemWidget(

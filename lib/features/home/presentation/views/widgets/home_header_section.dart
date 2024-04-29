@@ -11,33 +11,35 @@ class HomeHeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final basketCubit = context.watch<BasketCubit>();
-    return Row(
-      children: [
-        const Expanded(
-          child: HomeAddressContainer(),
-        ),
-        const SizedBox(width: 20),
-        Badge(
-          label: Text(basketCubit.state.basket != null &&
-                  basketCubit.state.basket?.basketProducts != null
-              ? basketCubit.state.basket!.basketProducts.length.toString()
-              : '0'),
-          backgroundColor: AppColors.primaryColor,
-          isLabelVisible: basketCubit.state.basket != null &&
-              basketCubit.state.basket?.basketProducts != null &&
-              basketCubit.state.basket!.basketProducts.isNotEmpty,
-          alignment: Alignment.topCenter,
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(BasketScreen.routeName);
-            },
-            icon: const Icon(
-              Icons.shopping_cart_outlined,
-              color: AppColors.primaryColor,
+    return SafeArea(
+      child: Row(
+        children: [
+          const Expanded(
+            child: HomeAddressContainer(),
+          ),
+          const SizedBox(width: 20),
+          Badge(
+            label: Text(basketCubit.state.basket != null &&
+                    basketCubit.state.basket?.basketProducts != null
+                ? basketCubit.state.basket!.basketProducts.length.toString()
+                : '0'),
+            backgroundColor: AppColors.errorColor,
+            isLabelVisible: basketCubit.state.basket != null &&
+                basketCubit.state.basket?.basketProducts != null &&
+                basketCubit.state.basket!.basketProducts.isNotEmpty,
+            alignment: Alignment.topCenter,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(BasketScreen.routeName);
+              },
+              icon: const Icon(
+                Icons.shopping_cart_outlined,
+                color: AppColors.primaryColor,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
