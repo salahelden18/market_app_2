@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
 import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
+import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
 
 import 'core/widget/loading_widget.dart';
 import 'features/address/presentation/model_views/address_cubit.dart';
@@ -56,6 +57,7 @@ class LoadingDataScreen extends StatelessWidget {
               address.selectedAddress?.lng ?? location.currentLocation!.lng,
               address.selectedAddress?.subDistrictId,
             ),
+        context.read<CurrentActiveOrderCubit>().getActiveOrders(),
       ]);
 
       // gettinn the basket data

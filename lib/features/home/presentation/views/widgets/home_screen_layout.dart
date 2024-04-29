@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_app_2/features/home/presentation/views/widgets/active_order_section.dart';
 import 'categories_list_widget.dart';
 import 'category_section.dart';
 import 'banners_widget.dart';
@@ -29,7 +30,7 @@ class HomeScreenLayout extends StatelessWidget {
   final List<Widget> children = const [
     HomeHeaderSection(),
     BannersWidget(),
-    // TODO: add active orders here
+    ActiveOrderSection(),
     CategorySection(
       title: 'Categories',
       widget: CategoriesListWidget(),

@@ -77,10 +77,11 @@ class _OrderScreenState extends State<OrderScreen> {
                   title: 'Products',
                   widget: Column(
                     children: List.generate(
-                      basketState.state.basket!.basketProducts.length,
-                      (index) => basketState.state.basket!.basketProducts[index]
-                                  .branchProductModel !=
-                              null
+                      basketState.state.basket?.basketProducts.length ?? 0,
+                      (index) => basketState.state.basket != null &&
+                              basketState.state.basket!.basketProducts[index]
+                                      .branchProductModel !=
+                                  null
                           ? Column(
                               children: [
                                 BasketItemWidget(

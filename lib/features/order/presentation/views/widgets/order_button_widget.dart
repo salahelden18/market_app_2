@@ -4,8 +4,10 @@ import 'package:market_app_2/core/utils/dialog_manager_overlay.dart';
 import 'package:market_app_2/core/utils/show_toast.dart';
 import 'package:market_app_2/features/address/presentation/model_views/address_cubit.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/order/data/models/order_request_model.dart';
+import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_states.dart';
 import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
@@ -19,14 +21,19 @@ class OrderButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AddOrderCubit, AddOrderStates>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AddOrderLoadingState) {
           DialogManagerOverlay.showDialogWithMessage(context);
         } else if (state is AddOrderFailureState) {
           DialogManagerOverlay.closeDialog();
           showToast(context: context, msg: state.errorMessage);
         } else if (state is AddOrderSuccessState) {
-          // TODO call active orders, basket
+          final branchId = context.read<BranchCubit>().state.branchModel!.id;
+          await Future.wait([
+            context.read<CurrentActiveOrderCubit>().getActiveOrders(),
+            context.read<BasketCubit>().getBasket(branchId)
+          ]);
+
           DialogManagerOverlay.closeDialog();
           Navigator.of(context)
               .popUntil((route) => route.settings.name == HomeScreen.routeName);

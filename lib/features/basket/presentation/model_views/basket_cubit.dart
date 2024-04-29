@@ -16,7 +16,8 @@ class BasketCubit extends Cubit<BasketStates> {
     result.fold((l) {
       emit(state.copyWith(isFirstLoading: false));
     }, (r) {
-      emit(state.copyWith(isFirstLoading: false, basket: r));
+      // emit(state.copyWith(isFirstLoading: false, basket: r));
+      emit(BasketStates(basket: r, isFirstLoading: false));
     });
   }
 
