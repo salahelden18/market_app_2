@@ -13,7 +13,7 @@ class CurrentActiveOrderCubit extends Cubit<CurrentActiveOrdersStates> {
 
     result.fold(
       (l) => emit(CurrentActiveOrderFailureState(l.message)),
-      (r) => emit(CurrentActiveOrderSuccessState(r!)),
+      (r) => emit(CurrentActiveOrderSuccessState(r ?? [])),
     );
   }
 }

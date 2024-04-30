@@ -8,7 +8,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 // Cloud messaging
-void configureFirebaseMessaging() {
+configureFirebaseMessaging() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     // Handle incoming messages when the app is in the foreground
     print("Message received: ${message.notification?.title}");
@@ -22,13 +22,13 @@ void configureFirebaseMessaging() {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 }
 
-void handleFCMToken() async {
+handleFCMToken() async {
   String? token = await FirebaseMessaging.instance.getToken();
   fcmToken = token;
   print('FCM Token: $token');
 }
 
-void requestNotificationPermissions() async {
+requestNotificationPermissions() async {
   NotificationSettings settings =
       await FirebaseMessaging.instance.requestPermission();
   print('User granted permission: ${settings.authorizationStatus}');

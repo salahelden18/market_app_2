@@ -25,6 +25,8 @@ class LoadingDataScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingWidget();
           } else if (snapshot.hasError) {
+            print('>>>>>>>>> ${snapshot.error}');
+            print('>>>>>>>>> $snapshot');
             return Center(
               child: Text(
                 snapshot.error.toString(),
@@ -55,8 +57,12 @@ class LoadingDataScreen extends StatelessWidget {
       await Future.wait([
         context.read<BannersCubit>().getBanners(),
         context.read<BranchCubit>().getBranch(
-              address.selectedAddress?.lat ?? location.currentLocation!.lat,
-              address.selectedAddress?.lng ?? location.currentLocation!.lng,
+              address.selectedAddress?.lat ??
+                  location.currentLocation?.lat ??
+                  0,
+              address.selectedAddress?.lng ??
+                  location.currentLocation?.lng ??
+                  0,
               address.selectedAddress?.subDistrictId,
             ),
         context.read<CurrentActiveOrderCubit>().getActiveOrders(),
