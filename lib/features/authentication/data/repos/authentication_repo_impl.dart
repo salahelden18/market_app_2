@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:market_app_2/features/authentication/data/models/verify_request_model.dart';
+import 'package:market_app_2/firebase_cloud_messaging.dart';
 import '../../../../core/constants/endpoint_constants.dart';
 import '../../../../core/error/http_failure.dart';
 import '../../../../core/services/http_service_interface.dart';
@@ -43,5 +44,13 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
         fromJson: (decodedJson) => LoginModel.fromJson(decodedJson),
         requireToken: false,
         body: verifyRequestModel.toJson());
+  }
+
+  @override
+  Future<Either<HttpFailure, String?>> configFCM() {
+    return _httpServiceInterface.patch(
+      url: EndPointConstants.configFCM(fcmToken!),
+      fromJson: (p0) => p0.toString(),
+    );
   }
 }

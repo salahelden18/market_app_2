@@ -15,12 +15,22 @@ class OrderItemWidget extends StatelessWidget {
       margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.lightGray),
+        color: AppColors.white,
+        borderRadius: const BorderRadiusDirectional.only(
+          topStart: Radius.circular(20),
+          bottomEnd: Radius.circular(20),
+        ),
+        border: Border.all(color: AppColors.lightGray, width: 3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+              child: Icon(
+            Icons.shopping_bag_outlined,
+            color: AppColors.lightGray,
+            size: 60,
+          )),
           OrderNameValueWidget(
               text: 'Order Id', value: order.orderId.toString()),
           if (order.basketModel != null) const SizedBox(height: 10),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_app_2/core/style/app_colors.dart';
 
 class PaymentSummaryItemWidget extends StatelessWidget {
   const PaymentSummaryItemWidget({
@@ -6,10 +7,12 @@ class PaymentSummaryItemWidget extends StatelessWidget {
     required this.title,
     required this.value,
     this.isTotal = false,
+    this.isGreen = false,
   });
   final String title;
   final String value;
   final bool isTotal;
+  final bool isGreen;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +22,16 @@ class PaymentSummaryItemWidget extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
-          ),
+              fontSize: 14,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
+              color: isGreen ? Colors.green : Colors.black87),
         ),
         Text(
           value,
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
-          ),
+              fontSize: 14,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
+              color: isGreen ? Colors.green : Colors.black87),
         ),
       ],
     );

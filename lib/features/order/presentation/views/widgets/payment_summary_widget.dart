@@ -18,16 +18,22 @@ class PaymentSummaryWidget extends StatelessWidget {
       children: [
         PaymentSummaryItemWidget(
           title: 'Sub Total',
-          value: order.totalPrice.toString(),
+          value: '${order.totalPrice.toString()} ₺',
         ),
         const SizedBox(height: 10),
         PaymentSummaryItemWidget(
           title: 'Delivery Fees',
-          value: order.deliveryFees.toString(),
+          value: '${order.deliveryFees.toString()} ₺',
         ),
         const SizedBox(height: 10),
+        const PaymentSummaryItemWidget(
+          isGreen: true,
+          title: 'You Saved', 
+          value: '🎉  0 ₺',
+        ),
+        const SizedBox(height: 5),
         const Divider(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         PaymentSummaryItemWidget(
           title: 'Total',
           value: "${order.totalPrice + order.deliveryFees}",

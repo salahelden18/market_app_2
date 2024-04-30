@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:market_app_2/core/style/app_colors.dart';
+import 'package:market_app_2/core/style/font_style.dart';
 
 import '../../../../order/data/models/order_model.dart';
 import '../../../../order/presentation/views/order_tracking_screen.dart';
@@ -38,14 +40,20 @@ class ActiveOrderListItemWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(orderModel.orderStatusModel!.enName!),
+                  Text(orderModel.orderStatusModel!.enName!,
+                      style: FontStyle.size16AndLightGrey
+                          .copyWith(color: Colors.black)),
                   if (orderModel.orderStatusModel?.enDesc != null)
                     const SizedBox(height: 10),
                   if (orderModel.orderStatusModel?.enDesc != null)
                     Text(orderModel.orderStatusModel!.enDesc!),
                 ],
               ),
-              const Icon(Icons.arrow_forward_ios_outlined),
+              const Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: AppColors.primaryColor,
+                size: 20,
+              ),
             ],
           ),
         ),

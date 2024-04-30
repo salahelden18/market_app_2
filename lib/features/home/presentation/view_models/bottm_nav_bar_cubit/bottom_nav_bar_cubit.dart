@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:market_app_2/features/order/presentation/views/orders_history_screen.dart';
 import '../../../../favorite/presentation/views/favorite_screen.dart';
-import '../../../../profile/profile_screen.dart';
+import '../../../../profile/presentation/profile_screen.dart';
 import '../../views/widgets/home_screen_layout.dart';
 
 class BottomNavBarCubit extends Cubit<int> {

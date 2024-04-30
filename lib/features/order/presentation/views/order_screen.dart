@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/basket/presentation/views/widgets/basket_item_widget.dart';
 import 'package:market_app_2/features/order/presentation/views/widgets/order_button_widget.dart';
+import 'package:market_app_2/features/order/presentation/views/widgets/order_container_widget.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../../../basket/presentation/model_views/basket_cubit.dart';
 import '../../../home/presentation/view_models/branch/branch_cubit.dart';
@@ -59,21 +60,22 @@ class _OrderScreenState extends State<OrderScreen> {
           : ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               children: [
+                const SizedBox(height: 10),
                 // Address Section
-                const OrderSection(
+                const OrderContainerWidget(
                   title: 'Address',
                   widget: OrderAddressSection(),
                 ),
                 const SizedBox(height: 20),
                 // payment method section
-                const OrderSection(
+                const OrderContainerWidget(
                   title: 'Payment Method',
                   widget: OrderPaymentMethodWidget(),
                 ),
                 const SizedBox(height: 20),
 
                 // products section
-                OrderSection(
+                OrderContainerWidget(
                   title: 'Products',
                   widget: Column(
                     children: List.generate(
@@ -98,7 +100,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 const SizedBox(height: 20),
 
                 // payment summary section
-                const OrderSection(
+                const OrderContainerWidget(
                   title: 'Payment Summary',
                   widget: OrderPaymentSummary(),
                 ),

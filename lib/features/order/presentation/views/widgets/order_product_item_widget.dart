@@ -32,12 +32,12 @@ class OrderProductItemWidget extends StatelessWidget {
                 Text(
                   basketProductModel.branchProductModel!.product!.enName,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w600),
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 5),
                 Text('Quantity: ${basketProductModel.quantity}'),
                 const SizedBox(height: 5),
-                Text('${basketProductModel.branchProductModel!.price}'),
+                Text('${basketProductModel.branchProductModel!.price} ₺'),
               ],
             ),
           ),

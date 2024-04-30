@@ -26,10 +26,11 @@ class FavoriteScreen extends StatelessWidget {
                 if (state.isLoading) {
                   return const LoadingWidget();
                 } else if (state.favoriteProducts.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Text(
                       'You do\'t have any products in the favorite',
-                      style: FontStyle.size22Black600,
+                      style: FontStyle.size22Black600
+                          .copyWith(fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     ),
                   );

@@ -9,27 +9,31 @@ class OrderContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (title != null)
-          Text(
-            title!,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null)
+            Text(
+              title!,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
             ),
+          if (title != null) const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.lightGray),
+            ),
+            child: widget,
           ),
-        if (title != null) const SizedBox(height: 10),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.lightGray),
-          ),
-          child: widget,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

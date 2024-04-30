@@ -23,14 +23,14 @@ class OrderNameValueWidget extends StatelessWidget {
             text: '$text: ',
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               color: AppColors.primaryColor,
             )),
         TextSpan(
           text: value,
           style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            fontSize: 17,
             color: textColor ?? Colors.black,
           ),
         ),

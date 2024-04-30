@@ -17,7 +17,10 @@ class HomeScreenLayout extends StatelessWidget {
             return children[index];
           }
           return Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 10,
+              vertical: 5,
+            ),
             child: children[index],
           );
         },

@@ -24,13 +24,20 @@ class OrderPaymentSummary extends StatelessWidget {
           title: 'Delivery Fees',
         ),
         const SizedBox(height: 10),
+        const OrderPaymentItemWidget(
+          isYouSaved: true,
+          price: 0.0,
+          title: 'You Saved',
+        ),
+        const SizedBox(height: 5),
         const Divider(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         OrderPaymentItemWidget(
           price: basket.state.basket!.totalPrice +
               (branch.state.branchModel?.deliveryFees ?? 0.0),
           title: 'Total Price',
-        )
+        ),
+        
       ],
     );
   }

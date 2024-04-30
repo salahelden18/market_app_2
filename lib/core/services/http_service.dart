@@ -130,7 +130,6 @@ class HttpService extends HttpServiceInterface {
         throw TimeoutException(
             'Sorry, the operation took too long to complete. Please try again!');
       });
-
       final decodedResponse = jsonDecode(response.body);
 
       print(decodedResponse);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/core/style/font_style.dart';
 import 'package:market_app_2/features/address/presentation/views/add_address_screen.dart';
 import '../../../../address/presentation/model_views/address_cubit.dart';
 import '../../../../../core/style/app_colors.dart';
@@ -22,24 +23,42 @@ class AddressItemWidget extends StatelessWidget {
         await context.read<AddressCubit>().selectAddress(addressModel);
       },
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 10,
+          vertical: 15,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.lightGray),
+          color: isSelected ? AppColors.lightPrimaryColor : null,
+          border: Border.all(
+            color: AppColors.primaryColor,
+          ),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 25,
-              height: 25,
+              width: 23,
+              height: 23,
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.lightGray),
+                color: isSelected
+                    ? AppColors.white.withOpacity(.7)
+                    : AppColors.white,
+                border: Border.all(
+                  color: Colors.grey,
+                ),
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
               ),
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.circle,
+              //   border: Border.all(color: AppColors.lightGray),
+              // ),
               child: Container(
-                width: 20,
-                height: 20,
+                width: 18,
+                height: 18,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColors.lightGray),
@@ -47,12 +66,24 @@ class AddressItemWidget extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(width: 5),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
-                '${addressModel.city?.enName}, ${addressModel.district?.enName}, ${addressModel.subDistrict?.enName}, ${addressModel.fullAddress}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${addressModel.city?.enName}',
+                    style: FontStyle.size18Normal.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${addressModel.district?.enName}, ${addressModel.subDistrict?.enName}, ${addressModel.fullAddress}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 10),
@@ -61,9 +92,9 @@ class AddressItemWidget extends StatelessWidget {
                   Navigator.of(context).pushNamed(AddAddresssScreen.routeName,
                       arguments: addressModel);
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.edit,
-                  color: AppColors.secondColor,
+                  color: Colors.amber,
                 )),
           ],
         ),

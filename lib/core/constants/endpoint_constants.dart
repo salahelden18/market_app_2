@@ -7,6 +7,8 @@ class EndPointConstants {
   static const String login = '$accountBase/User/Login';
   static const String signup = '$accountBase/User/Signup';
   static const String verify = '$accountBase/User/VerifyOtp';
+  static String configFCM(String fcmToken) =>
+      '$accountBase/configFCM/$fcmToken';
 
   // address
   static const String addressBase = "$_baseUrl/Address";

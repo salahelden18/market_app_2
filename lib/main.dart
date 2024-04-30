@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/order_history_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
+import 'package:market_app_2/firebase_cloud_messaging.dart';
+import 'package:market_app_2/firebase_options.dart';
 import 'core/services/navigator_observer.dart';
 import 'core/style/theme.dart';
 import 'core/utils/router.dart';
@@ -24,6 +27,15 @@ import 'custom_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Intialize firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // Configure Firebase Cloud Messaging
+  configureFirebaseMessaging();
+  requestNotificationPermissions();
+  handleFCMToken();
+
   await di.init();
 
   Bloc.observer = CustomBlocObserver();

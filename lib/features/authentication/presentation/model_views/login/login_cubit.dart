@@ -25,6 +25,8 @@ class LoginCubit extends Cubit<LoginStates> {
           await _sharedPreferencesService.setData<String>(
               StringConstants.token, r.token!);
         }
+        // Config fcm
+        await _authenticationRepo.configFCM();
         emit(LoginSuccesstate(r));
       },
     );

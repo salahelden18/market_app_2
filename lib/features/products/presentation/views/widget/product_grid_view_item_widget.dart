@@ -27,7 +27,7 @@ class ProductGridViewItemWidget extends StatefulWidget {
 
 class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
   bool isLoading = false;
-  //Todo: product quantity
+  bool addToCartisLoading = false;
   final int _animationDuration = 250;
 
   @override
@@ -164,6 +164,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
               Expanded(
                 child: InkWell(
                   onTap: () async {
+                    setState(() {
+                      addToCartisLoading = true;
+                    });
                     if (basketProductModel.quantity == 1) {
                       await context
                           .read<BasketCubit>()
@@ -173,6 +176,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                           .read<BasketCubit>()
                           .decreaseQuantity(basketProductModel.id);
                     }
+                    setState(() {
+                      addToCartisLoading = false;
+                    });
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),
@@ -194,6 +200,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
             Expanded(
               child: InkWell(
                 onTap: () async {
+                  setState(() {
+                    addToCartisLoading = true;
+                  });
                   // if it is equal to null we will make adding other wise will be increasing
                   if (basketProductModel == null) {
                     final branchId =
@@ -201,6 +210,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                     context.read<BasketCubit>().addToBasket(BasketRequestModel(
                         branchId: branchId, branchProductId: branchProductId));
                   }
+                  setState(() {
+                    addToCartisLoading = false;
+                  });
                 },
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: _animationDuration),
@@ -210,15 +222,20 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                         basketProductModel != null ? 0 : 10),
                   ),
                   child: basketProductModel != null
-                      ? Center(
-                          child: Text(
-                            basketProductModel.quantity.toString(),
-                            style: const TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: buttonSize * .7,
-                            ),
-                          ),
-                        )
+                      ? addToCartisLoading
+                          ? const Padding(
+                              padding: EdgeInsets.all(3),
+                              child: LoadingWidget(strokeWidth: 3),
+                            )
+                          : Center(
+                              child: Text(
+                                basketProductModel.quantity.toString(),
+                                style: const TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: buttonSize * .7,
+                                ),
+                              ),
+                            )
                       : const Icon(
                           Icons.add,
                           size: buttonSize * .8,
@@ -231,9 +248,15 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
               Expanded(
                 child: InkWell(
                   onTap: () async {
+                    setState(() {
+                      addToCartisLoading = true;
+                    });
                     context
                         .read<BasketCubit>()
                         .increaseQuantity(basketProductModel.id);
+                    setState(() {
+                      addToCartisLoading = false;
+                    });
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),

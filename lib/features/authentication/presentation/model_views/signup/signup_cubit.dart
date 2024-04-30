@@ -14,7 +14,11 @@ class SignupCubit extends Cubit<SignupStates> {
     var result = await _authenticationRepo.signup(authenticationRequestModel);
 
     result.fold(
-      (l) => emit(SignupFailureState(l.message)),
+      (l) async {
+        // Config fcm
+        await _authenticationRepo.configFCM();
+        emit(SignupFailureState(l.message));
+      },
       (r) => emit(SigupSuccesstate(r!)),
     );
   }

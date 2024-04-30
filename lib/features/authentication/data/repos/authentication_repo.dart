@@ -6,6 +6,7 @@ import '../models/login_model.dart';
 import '../models/signup_model.dart';
 
 abstract class AuthenticationRepo {
+  Future<Either<HttpFailure, String?>> configFCM();
   Future<Either<HttpFailure, SignupModel?>> signup(
       AuthenticationRequestModel authenticationRequestModel);
   Future<Either<HttpFailure, LoginModel?>> login(
