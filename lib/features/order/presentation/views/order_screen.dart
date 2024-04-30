@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/basket/presentation/views/widgets/basket_item_widget.dart';
-import 'package:market_app_2/features/order/presentation/views/widgets/order_button_widget.dart';
-import 'package:market_app_2/features/order/presentation/views/widgets/order_container_widget.dart';
+import '../../../basket/presentation/views/widgets/basket_item_widget.dart';
+import 'widgets/order_button_widget.dart';
+import 'widgets/order_container_widget.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../../../basket/presentation/model_views/basket_cubit.dart';
 import '../../../home/presentation/view_models/branch/branch_cubit.dart';
@@ -11,7 +11,6 @@ import '../view_models/payment/payment_method_states.dart';
 import 'widgets/order_payment_summary.dart';
 import 'widgets/order_address_section.dart';
 import 'widgets/order_payment_section_method.dart';
-import 'widgets/order_section.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
 
 class PaymentSummaryItemWidget extends StatelessWidget {
   const PaymentSummaryItemWidget({

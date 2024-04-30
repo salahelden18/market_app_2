@@ -35,6 +35,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     super.didChangeDependencies();
     if (!didLoaded) {
       final orderId = ModalRoute.of(context)?.settings.arguments as String;
+
       context.read<OrderDetailsCubit>().getOrderDetails(orderId);
       didLoaded = true;
     }

@@ -8,6 +8,7 @@ import 'package:market_app_2/features/authentication/presentation/views/authenti
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
 import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
+import 'package:market_app_2/features/order/presentation/view_models/order_history_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_cubit.dart';
 import 'package:market_app_2/features/order/presentation/views/order_screen.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
@@ -78,7 +79,9 @@ Route<dynamic> generateRouter(RouteSettings settings) {
       );
     case OrdersHistoryScreen.routeName:
       return MaterialPageRoute(
-        builder: (ctx) => const OrdersHistoryScreen(),
+        builder: (ctx) => BlocProvider(
+            create: (ctx) => OrderHistoryCubit(sl()),
+            child: const OrdersHistoryScreen()),
         settings: settings,
       );
     case OrderTrackingScreen.routeName:

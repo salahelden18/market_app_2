@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
-import 'package:market_app_2/core/widget/divider_continer.dart';
-import 'package:market_app_2/features/profile/presentation/widgets/edit_button_widget.dart';
-import 'package:market_app_2/features/profile/presentation/widgets/items_collection.dart';
-import 'package:market_app_2/features/profile/presentation/widgets/profile_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
+import '../../../core/style/app_colors.dart';
+import '../../../core/widget/divider_continer.dart';
+import '../../order/presentation/views/orders_history_screen.dart';
+import 'model_views/profile_states.dart';
+import 'widgets/edit_button_widget.dart';
+import 'widgets/items_collection.dart';
+import 'widgets/profile_item.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,34 +23,43 @@ class ProfileScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           // the user information
-          Stack(
-            alignment: AlignmentDirectional.bottomEnd,
-            children: [
-              ItemsCollection(
-                collectionTitle: 'My Info',
-                collectionItems: [
-                  //Todo: user info
-                  ProfileItem(
-                    title: 'sfsdfsd',
-                    icon: Icons.person_2_outlined,
-                    onTap: () {},
-                  ),
-                  //Todo: user info
-                  ProfileItem(
-                    title: 'sfsdfsd',
-                    icon: Icons.email_outlined,
-                    onTap: () {},
-                  ),
-                  //Todo: user info
-                  ProfileItem(
-                    title: 'sfsdfsd',
-                    icon: Icons.phone_outlined,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              const EditButton(),
-            ],
+          BlocBuilder<ProfileCubit, ProfileStates>(
+            builder: (context, state) {
+              if (state is ProfileSuccessState) {
+                return Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: [
+                    ItemsCollection(
+                      collectionTitle: 'My Info',
+                      collectionItems: [
+                        //Todo: user info
+                        ProfileItem(
+                          title: state.userProfileModel.fullName,
+                          icon: Icons.person_2_outlined,
+                          onTap: () {},
+                        ),
+                        //Todo: user info
+                        ProfileItem(
+                          title: state.userProfileModel.email,
+                          icon: Icons.email_outlined,
+                          onTap: () {},
+                        ),
+                        if (state.userProfileModel.phoneNumber != null)
+                          //Todo: user info
+                          ProfileItem(
+                            title: state.userProfileModel.phoneNumber!,
+                            icon: Icons.phone_outlined,
+                            onTap: () {},
+                          ),
+                      ],
+                    ),
+                    const EditButton(),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
           const SizedBox(height: 15),
           // the user settings
@@ -74,7 +87,10 @@ class ProfileScreen extends StatelessWidget {
                 isButton: true,
                 title: 'Orders History',
                 icon: Icons.shopping_basket_outlined,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(OrdersHistoryScreen.routeName);
+                },
               ),
               const DividerContiner(),
               //Todo languages

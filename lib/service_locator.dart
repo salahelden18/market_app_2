@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:market_app_2/features/profile/data/repo/profile_repo.dart';
+import 'package:market_app_2/features/profile/data/repo/profile_repo_impl.dart';
 import 'features/basket/data/repo/basket_repo.dart';
 import 'features/basket/data/repo/basket_repo_impl.dart';
 import 'features/order/data/repo/order_repo.dart';
@@ -36,4 +38,5 @@ Future<void> init() async {
   sl.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImpl(sl()));
   sl.registerLazySingleton<BasketRepo>(() => BasketRepoImpl(sl()));
   sl.registerLazySingleton<OrderRepo>(() => OrderRepoImple(sl()));
+  sl.registerLazySingleton<ProfileRepo>(() => ProfileRepoImpl(sl()));
 }

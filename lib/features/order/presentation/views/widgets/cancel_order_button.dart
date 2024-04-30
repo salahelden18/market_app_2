@@ -26,8 +26,12 @@ class CancelOrderButton extends StatelessWidget {
               showToast(context: context, msg: state.errorMessage);
               DialogManagerOverlay.closeDialog();
             } else if (state is CancelOrderSuccessState) {
+              print("Entered here in the cancelling part");
+              print(
+                  MyRouteObserver.containsPage(OrdersHistoryScreen.routeName));
               // if we orders screen exist in the stack update it also
               if (MyRouteObserver.containsPage(OrdersHistoryScreen.routeName)) {
+                print('the condition is true upated is executed');
                 context
                     .read<OrderHistoryCubit>()
                     .updateStatus(orderId, state.orderStatus);

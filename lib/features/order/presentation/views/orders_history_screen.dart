@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/order/presentation/view_models/order_details_cubit.dart/order_details_cubit.dart';
+import 'package:market_app_2/service_locator.dart';
 import '../view_models/order_history_cubit.dart';
 import '../view_models/order_hsitory_states.dart';
 import 'order_tracking_screen.dart';
@@ -15,6 +17,7 @@ class OrdersHistoryScreen extends StatefulWidget {
 
 class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
   final controller = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -60,9 +63,17 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                   return InkWell(
                     splashColor: Colors.transparent,
                     onTap: () {
-                      Navigator.of(context).pushNamed(
-                          OrderTrackingScreen.routeName,
-                          arguments: order.id);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => MultiBlocProvider(providers: [
+                            BlocProvider.value(
+                                value: context.read<OrderHistoryCubit>()),
+                            BlocProvider(
+                                create: (ctx) => OrderDetailsCubit(sl())),
+                          ], child: const OrderTrackingScreen()),
+                          settings: RouteSettings(arguments: order.id),
+                        ),
+                      );
                     },
                     child: OrderItemWidget(
                       order: order,

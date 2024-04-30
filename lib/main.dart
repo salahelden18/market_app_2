@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
-import 'package:market_app_2/features/order/presentation/view_models/order_history_cubit.dart';
-import 'package:market_app_2/features/order/presentation/view_models/payment/payment_method_cubit.dart';
-import 'package:market_app_2/firebase_cloud_messaging.dart';
-import 'package:market_app_2/firebase_options.dart';
+import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
+import 'features/basket/presentation/model_views/basket_cubit.dart';
+import 'features/order/presentation/view_models/payment/payment_method_cubit.dart';
+import 'firebase_cloud_messaging.dart';
+import 'firebase_options.dart';
 import 'core/services/navigator_observer.dart';
 import 'core/style/theme.dart';
 import 'core/utils/router.dart';
@@ -24,6 +24,8 @@ import 'splash_screen.dart';
 import 'service_locator.dart' as di;
 
 import 'custom_bloc_observer.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,11 +68,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => BasketCubit(di.sl())),
         BlocProvider(create: (ctx) => PaymentMethodCubit(di.sl())),
         BlocProvider(create: (ctx) => CurrentActiveOrderCubit(di.sl())),
-        BlocProvider(
-          create: (ctx) => OrderHistoryCubit(di.sl()),
-        ),
+        BlocProvider(create: (ctx) => ProfileCubit(di.sl())),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         navigatorObservers: [MyRouteObserver()],
         title: 'Market App',
         theme: appTheme,

@@ -45,4 +45,7 @@ class EndPointConstants {
 
   // orders
   static const String orderBase = "$_baseUrl/Order";
+
+  // user
+  static const String userBase = "$_baseUrl/User";
 }

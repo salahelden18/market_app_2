@@ -4,6 +4,7 @@ import 'package:market_app_2/features/basket/presentation/model_views/basket_cub
 import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
+import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
 
 import 'core/widget/loading_widget.dart';
 import 'features/address/presentation/model_views/address_cubit.dart';
@@ -44,7 +45,8 @@ class LoadingDataScreen extends StatelessWidget {
     // here the user is authenticated
     await Future.wait([
       context.read<AddressCubit>().getAddresses(),
-      context.read<FavoritesCubit>().getFavorites()
+      context.read<FavoritesCubit>().getFavorites(),
+      context.read<ProfileCubit>().getProfile(),
     ]);
 
     if (context.mounted) {
