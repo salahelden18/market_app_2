@@ -1,6 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/address/presentation/model_views/address_cubit.dart';
+import 'package:market_app_2/features/authentication/presentation/views/forgot_password_screen.dart';
+import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
+import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
+import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
+import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/font_style.dart';
 import '../../../../core/utils/dialog_manager_overlay.dart';
@@ -160,9 +166,22 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           // if the token exist authenticate the user and finish the process
                           if (state.loginModel.token != null) {
                             // if the token is null show the message and navigate to the otp screen
-                            await context
-                                .read<AutoAuthenticationCubit>()
-                                .authenticateUser();
+                            final branchId = context
+                                .read<BranchCubit>()
+                                .state
+                                .branchModel!
+                                .id;
+
+                            await Future.wait([
+                              context
+                                  .read<AutoAuthenticationCubit>()
+                                  .authenticateUser(),
+                              context.read<ProfileCubit>().getProfile(),
+                              context.read<FavoritesCubit>().getFavorites(),
+                              context.read<BasketCubit>().getBasket(branchId),
+                              context.read<AddressCubit>().getAddresses(),
+                            ]);
+
                             // ignore: use_build_context_synchronously
                             Navigator.pop(context);
                           } else {
@@ -211,7 +230,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(ForgotPasswordScreen.routeName);
+                    },
                     child: const Text('Forget Password?'),
                   ),
                 ),

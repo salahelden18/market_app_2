@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
 import 'package:market_app_2/core/utils/dialog_manager_overlay.dart';
+import 'package:market_app_2/core/utils/show_toast.dart';
 import 'package:market_app_2/core/widget/filled_button_widget.dart';
+import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
+import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
 import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
 import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
@@ -122,16 +125,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         padding: const EdgeInsets.all(10),
         child: FilledButtonWidget(
           onPress: () async {
-            DialogManagerOverlay.showDialogWithMessage(context);
-            await context.read<BasketCubit>().addToBasket(
-                  BasketRequestModel(
-                    branchId: context.read<BranchCubit>().state.branchModel!.id,
-                    branchProductId: branchProductModel.id,
-                  ),
-                );
+            final auth = context.read<AutoAuthenticationCubit>();
+            if (auth.state.authenticationState !=
+                AuthenticationStates.authenticated) {
+              showToast(context: context, msg: 'Please login first');
+            } else {
+              DialogManagerOverlay.showDialogWithMessage(context);
+              await context.read<BasketCubit>().addToBasket(
+                    BasketRequestModel(
+                      branchId:
+                          context.read<BranchCubit>().state.branchModel!.id,
+                      branchProductId: branchProductModel.id,
+                    ),
+                  );
 
-            DialogManagerOverlay.closeDialog();
-            Navigator.pop(context);
+              DialogManagerOverlay.closeDialog();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            }
           },
           widget: const Text('Add to Basket'),
         ),

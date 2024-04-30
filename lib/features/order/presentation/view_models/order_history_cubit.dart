@@ -30,19 +30,14 @@ class OrderHistoryCubit extends Cubit<OrderHistoryStates> {
     result.fold(
       (l) => emit(OrderHistoryFailureState(l.message)),
       (r) {
-        if (r!.isNotEmpty) {
-          orders = List<OrderModel>.from(orders)..addAll(r);
-          currentPage++;
+        orders = List<OrderModel>.from(orders)..addAll(r!);
+        currentPage++;
 
-          if (r.length < 10) {
-            hasMore = false;
-          }
-
-          emit(OrderHistorySuccessState(orders));
-        } else {
+        if (r.length < 10) {
           hasMore = false;
-          emit(const OrderHistorySuccessState([]));
         }
+
+        emit(OrderHistorySuccessState(orders));
       },
     );
   }

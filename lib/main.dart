@@ -53,9 +53,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (ctx) =>
-                AutoAuthenticationCubit(di.sl())..authenticateUser()),
+        BlocProvider(create: (ctx) => AutoAuthenticationCubit(di.sl())),
         BlocProvider(create: (ctx) => BranchCubit(di.sl())),
         BlocProvider(create: (ctx) => AddressCubit(di.sl(), di.sl())),
         BlocProvider(create: (ctx) => LocationAndGpsCubit(di.sl())),

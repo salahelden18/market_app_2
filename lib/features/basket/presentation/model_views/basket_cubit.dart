@@ -86,4 +86,8 @@ class BasketCubit extends Cubit<BasketStates> {
         (element) => element.branchProductModel?.id == branchProductId);
     return branchProduct;
   }
+
+  reset() {
+    emit(const BasketStates());
+  }
 }

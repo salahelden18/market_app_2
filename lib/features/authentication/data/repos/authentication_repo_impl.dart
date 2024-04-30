@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:market_app_2/features/authentication/data/models/verify_request_model.dart';
-import 'package:market_app_2/firebase_cloud_messaging.dart';
+import '../models/forgot_password_model.dart';
+import '../models/verify_request_model.dart';
+import '../../../../firebase_cloud_messaging.dart';
 import '../../../../core/constants/endpoint_constants.dart';
 import '../../../../core/error/http_failure.dart';
 import '../../../../core/services/http_service_interface.dart';
@@ -51,6 +52,16 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     return _httpServiceInterface.patch(
       url: EndPointConstants.configFCM(fcmToken!),
       fromJson: (p0) => p0.toString(),
+    );
+  }
+
+  @override
+  Future<Either<HttpFailure, SignupModel?>> forgotPassword(
+      ForgotPasswordModel forgotPasswordModel) async {
+    return await _httpServiceInterface.post(
+      url: EndPointConstants.forgot,
+      fromJson: (decodedJson) => SignupModel.fromJson(decodedJson),
+      body: forgotPasswordModel.toJson(),
     );
   }
 }

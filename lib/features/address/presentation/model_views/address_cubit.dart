@@ -75,4 +75,8 @@ class AddressCubit extends Cubit<AddressStates> {
 
     emit(state.copyWith(addresses: addresses, selectedAddress: addressModel));
   }
+
+  reset() {
+    emit(const AddressStates());
+  }
 }

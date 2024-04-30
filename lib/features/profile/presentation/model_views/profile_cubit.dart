@@ -17,4 +17,8 @@ class ProfileCubit extends Cubit<ProfileStates> {
       (r) => emit(ProfileSuccessState(r)),
     );
   }
+
+  reset() {
+    emit(ProfileInitialState());
+  }
 }

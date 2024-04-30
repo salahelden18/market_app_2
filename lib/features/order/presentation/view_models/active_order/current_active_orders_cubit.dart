@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/order/data/repo/order_repo.dart';
+import '../../../data/repo/order_repo.dart';
 import 'current_active_orders_states.dart';
 
 class CurrentActiveOrderCubit extends Cubit<CurrentActiveOrdersStates> {
@@ -13,7 +13,11 @@ class CurrentActiveOrderCubit extends Cubit<CurrentActiveOrdersStates> {
 
     result.fold(
       (l) => emit(CurrentActiveOrderFailureState(l.message)),
-      (r) => emit(CurrentActiveOrderSuccessState(r!)),
+      (r) => emit(CurrentActiveOrderSuccessState(r ?? [])),
     );
+  }
+
+  reset() {
+    emit(CurrentActiveOrderInitialState());
   }
 }

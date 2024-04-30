@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/address/presentation/model_views/add_edit_address/add_edit_address_cubit.dart';
 import 'package:market_app_2/features/address/presentation/model_views/address_common_cubit/address_common_cubit.dart';
 import 'package:market_app_2/features/address/presentation/views/add_address_screen.dart';
+import 'package:market_app_2/features/authentication/presentation/model_views/forgot_password/forgot_password_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/verifiy/verify_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/views/authentication_screen.dart';
+import 'package:market_app_2/features/authentication/presentation/views/forgot_password_screen.dart';
 import 'package:market_app_2/features/authentication/presentation/views/otp_screen.dart';
 import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
 import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
@@ -89,6 +91,13 @@ Route<dynamic> generateRouter(RouteSettings settings) {
         builder: (ctx) => BlocProvider(
             create: (ctx) => OrderDetailsCubit(sl()),
             child: const OrderTrackingScreen()),
+        settings: settings,
+      );
+    case ForgotPasswordScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => BlocProvider(
+            create: (ctx) => ForgotPasswordCubit(sl()),
+            child: const ForgotPasswordScreen()),
         settings: settings,
       );
 

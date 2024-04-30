@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/features/order/presentation/view_models/order_details_cubit.dart/order_details_cubit.dart';
-import 'package:market_app_2/service_locator.dart';
+import '../view_models/order_details_cubit.dart/order_details_cubit.dart';
+import '../../../../service_locator.dart';
 import '../view_models/order_history_cubit.dart';
 import '../view_models/order_hsitory_states.dart';
 import 'order_tracking_screen.dart';
@@ -55,6 +55,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               );
             }
             return ListView.builder(
+              controller: controller,
               padding: const EdgeInsets.all(16),
               itemBuilder: (ctx, index) {
                 if (index < state.orders.length) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
+import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
 import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
 import '../../../../basket/data/models/basket_product_model.dart';
@@ -27,7 +29,6 @@ class ProductGridViewItemWidget extends StatefulWidget {
 
 class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
   bool isLoading = false;
-  bool addToCartisLoading = false;
   final int _animationDuration = 250;
 
   @override
@@ -105,22 +106,28 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                 width: 20,
                 child: GestureDetector(
                   onTap: () async {
-                    setState(() {
-                      isLoading = true;
-                    });
-
-                    if (isfavProduct) {
-                      await context
-                          .read<FavoritesCubit>()
-                          .deleteFromFavorites(getProductId()!);
+                    final auth = context.read<AutoAuthenticationCubit>();
+                    if (auth.state.authenticationState !=
+                        AuthenticationStates.authenticated) {
+                      showToast(context: context, msg: 'Please login first');
                     } else {
-                      await context.read<FavoritesCubit>().addToFavorites(
-                          widget.branchProductModel.product!.id);
-                    }
+                      setState(() {
+                        isLoading = true;
+                      });
 
-                    setState(() {
-                      isLoading = false;
-                    });
+                      if (isfavProduct) {
+                        await context
+                            .read<FavoritesCubit>()
+                            .deleteFromFavorites(getProductId()!);
+                      } else {
+                        await context.read<FavoritesCubit>().addToFavorites(
+                            widget.branchProductModel.product!.id);
+                      }
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   },
                   child: isLoading
                       ? const LoadingWidget()
@@ -164,9 +171,6 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
               Expanded(
                 child: InkWell(
                   onTap: () async {
-                    setState(() {
-                      addToCartisLoading = true;
-                    });
                     if (basketProductModel.quantity == 1) {
                       await context
                           .read<BasketCubit>()
@@ -176,9 +180,6 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                           .read<BasketCubit>()
                           .decreaseQuantity(basketProductModel.id);
                     }
-                    setState(() {
-                      addToCartisLoading = false;
-                    });
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),
@@ -200,19 +201,21 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
             Expanded(
               child: InkWell(
                 onTap: () async {
-                  setState(() {
-                    addToCartisLoading = true;
-                  });
-                  // if it is equal to null we will make adding other wise will be increasing
-                  if (basketProductModel == null) {
-                    final branchId =
-                        context.read<BranchCubit>().state.branchModel!.id;
-                    context.read<BasketCubit>().addToBasket(BasketRequestModel(
-                        branchId: branchId, branchProductId: branchProductId));
+                  final auth = context.read<AutoAuthenticationCubit>();
+                  if (auth.state.authenticationState !=
+                      AuthenticationStates.authenticated) {
+                    showToast(context: context, msg: 'Please login first');
+                  } else {
+                    // if it is equal to null we will make adding other wise will be increasing
+                    if (basketProductModel == null) {
+                      final branchId =
+                          context.read<BranchCubit>().state.branchModel!.id;
+                      await context.read<BasketCubit>().addToBasket(
+                          BasketRequestModel(
+                              branchId: branchId,
+                              branchProductId: branchProductId));
+                    }
                   }
-                  setState(() {
-                    addToCartisLoading = false;
-                  });
                 },
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: _animationDuration),
@@ -222,20 +225,15 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                         basketProductModel != null ? 0 : 10),
                   ),
                   child: basketProductModel != null
-                      ? addToCartisLoading
-                          ? const Padding(
-                              padding: EdgeInsets.all(3),
-                              child: LoadingWidget(strokeWidth: 3),
-                            )
-                          : Center(
-                              child: Text(
-                                basketProductModel.quantity.toString(),
-                                style: const TextStyle(
-                                  color: AppColors.primaryColor,
-                                  fontSize: buttonSize * .7,
-                                ),
-                              ),
-                            )
+                      ? Center(
+                          child: Text(
+                            basketProductModel.quantity.toString(),
+                            style: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: buttonSize * .7,
+                            ),
+                          ),
+                        )
                       : const Icon(
                           Icons.add,
                           size: buttonSize * .8,
@@ -248,15 +246,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
               Expanded(
                 child: InkWell(
                   onTap: () async {
-                    setState(() {
-                      addToCartisLoading = true;
-                    });
-                    context
+                    await context
                         .read<BasketCubit>()
                         .increaseQuantity(basketProductModel.id);
-                    setState(() {
-                      addToCartisLoading = false;
-                    });
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: _animationDuration),
