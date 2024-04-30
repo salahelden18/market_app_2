@@ -34,20 +34,20 @@ class ProfileScreen extends StatelessWidget {
                       collectionItems: [
                         //Todo: user info
                         ProfileItem(
-                          title: state.userProfileModel.fullName,
+                          title: state.userProfileModel?.fullName ?? '',
                           icon: Icons.person_2_outlined,
                           onTap: () {},
                         ),
                         //Todo: user info
                         ProfileItem(
-                          title: state.userProfileModel.email,
+                          title: state.userProfileModel?.email ?? '',
                           icon: Icons.email_outlined,
                           onTap: () {},
                         ),
-                        if (state.userProfileModel.phoneNumber != null)
+                        if (state.userProfileModel?.phoneNumber != null)
                           //Todo: user info
                           ProfileItem(
-                            title: state.userProfileModel.phoneNumber!,
+                            title: state.userProfileModel?.phoneNumber ?? '',
                             icon: Icons.phone_outlined,
                             onTap: () {},
                           ),

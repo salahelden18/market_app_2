@@ -13,12 +13,12 @@ class ProfileInitialState extends ProfileStates {}
 class ProfileLoadingState extends ProfileStates {}
 
 class ProfileSuccessState extends ProfileStates {
-  final UserProfileModel userProfileModel;
+  final UserProfileModel? userProfileModel;
 
   const ProfileSuccessState(this.userProfileModel);
 
   @override
-  List<Object> get props => [userProfileModel];
+  List<Object> get props => [userProfileModel ?? ''];
 }
 
 class ProfileFailureState extends ProfileStates {
