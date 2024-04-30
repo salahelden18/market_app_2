@@ -27,6 +27,8 @@ class LoadingDataScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingWidget();
           } else if (snapshot.hasError) {
+            print('>>>>>>>>> ${snapshot.error}');
+            print('>>>>>>>>> $snapshot');
             return Center(
               child: Text(
                 snapshot.error.toString(),

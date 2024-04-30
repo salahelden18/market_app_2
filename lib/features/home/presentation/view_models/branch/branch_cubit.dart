@@ -12,13 +12,19 @@ class BranchCubit extends Cubit<BranchState> {
     var result = await _homeRepo.getBranch(
         'Lat=$lat&Lng=$lng${subDistrictId != null ? '&SubDistrictId=$subDistrictId' : ''}');
 
-    result.fold(
-      (l) {
-        throw HttpException(l.message);
-      },
-      (r) => emit(
+    result.fold((l) {
+      print('--------------------------------');
+      print(l.message);
+      print(l);
+      print('--------------------------------');
+      throw HttpException(l.message);
+    }, (r) {
+      print('--------------------------------');
+      print(r);
+      print('--------------------------------');
+      emit(
         BranchState(branchModel: r),
-      ),
-    );
+      );
+    });
   }
 }

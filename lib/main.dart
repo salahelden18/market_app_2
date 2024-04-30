@@ -34,9 +34,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Configure Firebase Cloud Messaging
-  configureFirebaseMessaging();
-  requestNotificationPermissions();
-  handleFCMToken();
+  await configureFirebaseMessaging();
+  await requestNotificationPermissions();
+  await handleFCMToken();
 
   await di.init();
 
