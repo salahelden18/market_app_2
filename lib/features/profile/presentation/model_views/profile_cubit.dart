@@ -21,4 +21,22 @@ class ProfileCubit extends Cubit<ProfileStates> {
   reset() {
     emit(ProfileInitialState());
   }
+
+// Edit Profile
+  Future editProfile({
+    required String fullName,
+    required String phoneNumber,
+  }) async {
+    emit(ProfileLoadingState());
+
+    var result = await _profileRepo.editProfile(
+        fullName: fullName, phoneNumber: phoneNumber);
+
+    result.fold(
+      (l) => emit(ProfileFailureState(l.message)),
+      (r) {
+        getProfile();
+      },
+    );
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
+import 'package:market_app_2/features/home/data/models/22.dart';
 import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
 import '../../../../basket/data/models/basket_product_model.dart';
 import '../../../../basket/presentation/model_views/basket_cubit.dart';
@@ -18,9 +19,13 @@ import '../../../data/models/branch_product_model.dart';
 
 class ProductGridViewItemWidget extends StatefulWidget {
   const ProductGridViewItemWidget(
-      {super.key, required this.branchProductModel, required this.favorite});
+      {super.key,
+      required this.branchProductModel,
+      required this.favorite,
+      required this.branchCategoryId});
   final BranchProductModel branchProductModel;
   final List<FavoriteModel> favorite;
+  final int branchCategoryId;
 
   @override
   State<ProductGridViewItemWidget> createState() =>
@@ -46,7 +51,11 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
       onTap: () {
         if (stock != 0) {
           Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
-              arguments: [widget.branchProductModel, heroTag]);
+              arguments: [
+                widget.branchProductModel,
+                heroTag,
+                widget.branchCategoryId
+              ]);
         } else {
           showToast(context: context, msg: 'There is no Stock');
         }

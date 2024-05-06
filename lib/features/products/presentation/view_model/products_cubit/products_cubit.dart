@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
 import 'package:market_app_2/features/products/data/models/custome_product_model.dart';
 import 'package:market_app_2/features/products/data/repos/product_repo.dart';
-import '../../../home/data/models/branch_category_model.dart';
+import '../../../../home/data/models/22.dart';
 import 'products_states.dart';
 
 class ProductsCubit extends Cubit<ProductStates> {
@@ -50,6 +51,17 @@ class ProductsCubit extends Cubit<ProductStates> {
         }).toList();
 
         emit(ProductStates(products: updatedList));
+      },
+    );
+  }
+
+  Future getRecommendedProducts(int branchCategoryId) async {
+    var result = await _productsRepo.getRecommendedProducts(branchCategoryId);
+
+    result.fold(
+      (l) => null,
+      (r) {
+        emit(ProductStates(recommendedProduct: r!));
       },
     );
   }

@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
 import '../../../../favorite/presentation/model_views/favorites_cubit.dart';
 import '../../../../favorite/presentation/model_views/favorites_states.dart';
 import '../../../../../core/style/font_style.dart';
 import '../../../../../core/widget/loading_widget.dart';
 import '../../../../home/presentation/view_models/branch/branch_cubit.dart';
-import '../../view_model/products_cubit.dart';
+import '../../view_model/products_cubit/products_cubit.dart';
 import 'tab_header_container_widget.dart';
-import '../../../../home/data/models/branch_category_model.dart';
 import '../../../data/models/custome_product_model.dart';
 import 'product_grid_view_item_widget.dart';
 
@@ -39,7 +39,7 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
       });
       await context
           .read<ProductsCubit>()
-          .getData(branch.state.branchModel!.id, item.branchCategoryModel.id);
+          .getData(branch.state.branchModel!.id, item.branchCategoryModel.id!);
 
       setState(() {
         isLoading = false;
@@ -66,6 +66,7 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
                         const SizedBox(width: 10),
                     itemCount: item.productsReponseModel.length,
                     itemBuilder: (ctx, index) => TabHeaderContainerWidget(
+                      isEnabled: item.productsReponseModel[index].isEnabled,
                       isSelected: true,
                       title: item
                           .productsReponseModel[index].subCategoryModel.enName,
@@ -75,41 +76,49 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
                 const SizedBox(height: 20),
                 Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    itemCount: item.productsReponseModel.length,
-                    itemBuilder: (ctx, productIndex) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.productsReponseModel[productIndex]
-                              .subCategoryModel.enName,
-                          style: FontStyle.size22Black600,
-                        ),
-                        const SizedBox(height: 15),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                            mainAxisExtent: 190,
-                          ),
-                          itemBuilder: (ctx, index) =>
-                              ProductGridViewItemWidget(
-                            favorite: favoriteState.favoriteProducts,
-                            branchProductModel: item
-                                .productsReponseModel[productIndex]
-                                .branchProducts[index],
-                          ),
-                          itemCount: item.productsReponseModel[productIndex]
-                              .branchProducts.length,
-                        ),
-                        const SizedBox(height: 20)
-                      ],
-                    ),
-                  ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      itemCount: item.productsReponseModel.length,
+                      itemBuilder: (ctx, productIndex) {
+                        return item.productsReponseModel[productIndex].isEnabled
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.productsReponseModel[productIndex]
+                                        .subCategoryModel.enName,
+                                    style: FontStyle.size22Black600,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                                      mainAxisExtent: 190,
+                                    ),
+                                    itemBuilder: (ctx, index) =>
+                                        ProductGridViewItemWidget(
+                                      favorite: favoriteState.favoriteProducts,
+                                      branchProductModel: item
+                                          .productsReponseModel[productIndex]
+                                          .branchProducts[index],
+                                      branchCategoryId:
+                                          widget.branchCategoryModel.id!,
+                                    ),
+                                    itemCount: item
+                                        .productsReponseModel[productIndex]
+                                        .branchProducts
+                                        .length,
+                                  ),
+                                  const SizedBox(height: 20)
+                                ],
+                              )
+                            : null;
+                      }),
                 ),
               ],
             );

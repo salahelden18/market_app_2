@@ -17,4 +17,18 @@ class ProfileRepoImpl implements ProfileRepo {
       fromJson: (decodedJson) => UserProfileModel.fromJson(decodedJson),
     );
   }
+
+  @override
+  Future<Either<HttpFailure, Map<String, String>?>> editProfile({
+    required String fullName,
+    required String phoneNumber,
+  }) {
+    return _httpServiceInterface.patch(
+      url: EndPointConstants.userBase,
+      body: {"fullName": fullName, "phoneNumber": phoneNumber},
+      fromJson: (p0) {
+        return null;
+      },
+    );
+  }
 }

@@ -13,7 +13,7 @@ class FavoriteStates extends Equatable {
 
   FavoriteStates copyWith({
     bool? isLoading,
-    List<FavoriteModel>? favoriteProducts,
+    List<FavoriteModel>?    favoriteProducts,
   }) {
     return FavoriteStates(
       favoriteProducts: favoriteProducts ?? this.favoriteProducts,

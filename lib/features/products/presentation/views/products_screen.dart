@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
+import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
 import 'package:market_app_2/features/home/presentation/view_models/categories/categories_cubit.dart';
 import 'package:market_app_2/features/home/presentation/view_models/categories/categories_states.dart';
 import 'package:market_app_2/features/home/presentation/views/widgets/basket_badge_widget.dart';
-import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
+import 'package:market_app_2/features/products/presentation/view_model/products_cubit/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/widget/tab_bar_view_item_widget.dart';
 
-import '../../../home/data/models/branch_category_model.dart';
+import '../../../home/data/models/22.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -69,7 +70,7 @@ class _ProductsScreenState extends State<ProductsScreen>
             categories.length,
             (index) => Padding(
               padding: const EdgeInsetsDirectional.only(bottom: 8),
-              child: Text(categories[index].category.enName),
+              child: Text(categories[index].category!.enName!),
             ),
           ),
         ),
