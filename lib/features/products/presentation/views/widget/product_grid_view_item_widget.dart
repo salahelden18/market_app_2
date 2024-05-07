@@ -100,7 +100,32 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 3),
-                Text('${widget.branchProductModel.price.toString()} ₺'),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Original price
+                    if (widget.branchProductModel.discountValue != 0)
+                      Text(
+                        '${widget.branchProductModel.price.toString()} ₺',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    if (widget.branchProductModel.discountValue != 0)
+                      const SizedBox(width: 3),
+                    Text(
+                      '${widget.branchProductModel.discountValue == 0 ? widget.branchProductModel.price : getDisount(widget.branchProductModel.discountTypes!, widget.branchProductModel.discountValue!, widget.branchProductModel.price)} ₺',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

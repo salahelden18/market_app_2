@@ -246,11 +246,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
+}
 
-  double getDisount(int discountType, double discountValue, double price) {
-    if (discountType == 0) {
-      return price - discountValue;
-    }
-    return price * discountValue;
+double getDisount(int discountType, double discountValue, double price) {
+  // If the discount percentage
+  if (discountType == 0) {
+    return price * (discountValue / 100);
   }
+  return price - discountValue;
 }
