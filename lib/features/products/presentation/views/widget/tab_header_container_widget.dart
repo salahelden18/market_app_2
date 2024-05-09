@@ -1,5 +1,3 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
 

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
-import 'package:market_app_2/features/home/data/models/22.dart';
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/widget/product_grid_view_item_widget.dart';
-import 'package:market_app_2/service_locator.dart';
 
 class RecommendedProductsWidget extends StatefulWidget {
   const RecommendedProductsWidget({

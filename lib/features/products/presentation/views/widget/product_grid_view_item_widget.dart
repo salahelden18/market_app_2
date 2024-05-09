@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
-import 'package:market_app_2/features/home/data/models/22.dart';
 import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
 import '../../../../basket/data/models/basket_product_model.dart';
 import '../../../../basket/presentation/model_views/basket_cubit.dart';

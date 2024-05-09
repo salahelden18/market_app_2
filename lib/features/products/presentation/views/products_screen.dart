@@ -8,8 +8,6 @@ import 'package:market_app_2/features/home/presentation/views/widgets/basket_bad
 import 'package:market_app_2/features/products/presentation/view_model/products_cubit/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/widget/tab_bar_view_item_widget.dart';
 
-import '../../../home/data/models/22.dart';
-
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
   static const String routeName = '/products-screen';

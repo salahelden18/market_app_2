@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:market_app_2/core/utils/show_toast.dart';
 import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
 import '../../../../products/presentation/views/products_screen.dart';
-import '../../../data/models/22.dart';
 
 class CategoryListItemWidget extends StatelessWidget {
   const CategoryListItemWidget(

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
-import '../../../data/models/22.dart';
 
 abstract class CategoriesStates extends Equatable {
   const CategoriesStates();

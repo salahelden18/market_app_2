@@ -6,7 +6,6 @@ import 'package:market_app_2/features/authentication/presentation/model_views/au
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'package:market_app_2/features/home/presentation/views/widgets/address_sheet_widget.dart';
 import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
-import '../../../../core/style/app_colors.dart';
 import '../../../../core/widget/divider_continer.dart';
 import '../../../order/presentation/views/orders_history_screen.dart';
 import '../model_views/profile_states.dart';

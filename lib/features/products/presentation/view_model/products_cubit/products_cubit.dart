@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
 import 'package:market_app_2/features/products/data/models/custome_product_model.dart';
 import 'package:market_app_2/features/products/data/repos/product_repo.dart';
-import '../../../../home/data/models/22.dart';
 import 'products_states.dart';
 
 class ProductsCubit extends Cubit<ProductStates> {
