@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
+import 'package:market_app_2/features/profile/presentation/view/edit_profile_screen.dart';
 
 class EditButton extends StatelessWidget {
   const EditButton({
@@ -10,7 +11,9 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, EditProfileScreen.routeName);
+      },
       child: Container(
           padding: const EdgeInsetsDirectional.symmetric(
             horizontal: 15,

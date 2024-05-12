@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/core/utils/show_modal_sheet.dart';
 import 'package:market_app_2/core/widget/not_authenticated_widget.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
+import 'package:market_app_2/features/home/presentation/views/widgets/address_sheet_widget.dart';
 import 'package:market_app_2/features/profile/presentation/model_views/profile_cubit.dart';
-import '../../../core/style/app_colors.dart';
-import '../../../core/widget/divider_continer.dart';
-import '../../order/presentation/views/orders_history_screen.dart';
-import 'model_views/profile_states.dart';
+import '../../../../core/widget/divider_continer.dart';
+import '../../../order/presentation/views/orders_history_screen.dart';
+import '../model_views/profile_states.dart';
 import 'widgets/edit_button_widget.dart';
 import 'widgets/items_collection.dart';
 import 'widgets/profile_item.dart';
@@ -78,17 +79,22 @@ class ProfileScreen extends StatelessWidget {
                       isButton: true,
                       title: 'Addresses',
                       icon: Icons.place_outlined,
-                      onTap: () {},
+                      onTap: () async {
+                        await showModalSheet(
+                          context,
+                          const AddressSheetWidget(),
+                        );
+                      },
                     ),
                     const DividerContiner(),
                     //Todo payment methods
-                    ProfileItem(
-                      isButton: true,
-                      title: 'Payment Methods',
-                      icon: Icons.wallet_outlined,
-                      onTap: () {},
-                    ),
-                    const DividerContiner(),
+                    // ProfileItem(
+                    //   isButton: true,
+                    //   title: 'Payment Methods',
+                    //   icon: Icons.wallet_outlined,
+                    //   onTap: () {},
+                    // ),
+                    // const DividerContiner(),
                     //Todo orders history
                     ProfileItem(
                       isButton: true,
@@ -101,13 +107,13 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const DividerContiner(),
                     //Todo languages
-                    ProfileItem(
-                      isButton: true,
-                      title: 'Languages',
-                      icon: Icons.language_outlined,
-                      onTap: () {},
-                    ),
-                    const DividerContiner(),
+                    // ProfileItem(
+                    //   isButton: true,
+                    //   title: 'Languages',
+                    //   icon: Icons.language_outlined,
+                    //   onTap: () {},
+                    // ),
+                    // const DividerContiner(),
                     //Todo help
                     ProfileItem(
                       isButton: true,
@@ -117,16 +123,16 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const DividerContiner(),
                     //Todo Signin as a driver
-                    Container(
-                      color: AppColors.primaryColor.withOpacity(.3),
-                      child: ProfileItem(
-                        isButton: true,
-                        title: 'Sign In As A Driver',
-                        icon: Icons.motorcycle_outlined,
-                        onTap: () {},
-                      ),
-                    ),
-                    const DividerContiner(),
+                    // Container(
+                    //   color: AppColors.primaryColor.withOpacity(.3),
+                    //   child: ProfileItem(
+                    //     isButton: true,
+                    //     title: 'Sign In As A Driver',
+                    //     icon: Icons.motorcycle_outlined,
+                    //     onTap: () {},
+                    //   ),
+                    // ),
+                    // const DividerContiner(),
                     //Todo Sign out
                     Container(
                       decoration: BoxDecoration(

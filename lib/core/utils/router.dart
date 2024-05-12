@@ -13,9 +13,10 @@ import 'package:market_app_2/features/home/presentation/views/home_screen.dart';
 import 'package:market_app_2/features/order/presentation/view_models/order_history_cubit.dart';
 import 'package:market_app_2/features/order/presentation/view_models/orders/add_order_cubit.dart';
 import 'package:market_app_2/features/order/presentation/views/order_screen.dart';
-import 'package:market_app_2/features/products/presentation/view_model/products_cubit.dart';
+import 'package:market_app_2/features/products/presentation/view_model/products_cubit/products_cubit.dart';
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import 'package:market_app_2/features/products/presentation/views/products_screen.dart';
+import 'package:market_app_2/features/profile/presentation/view/edit_profile_screen.dart';
 import 'package:market_app_2/loading_data_screen.dart';
 import 'package:market_app_2/not_found_screen.dart';
 import 'package:market_app_2/service_locator.dart';
@@ -98,6 +99,11 @@ Route<dynamic> generateRouter(RouteSettings settings) {
         builder: (ctx) => BlocProvider(
             create: (ctx) => ForgotPasswordCubit(sl()),
             child: const ForgotPasswordScreen()),
+        settings: settings,
+      );
+    case EditProfileScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => EditProfileScreen(),
         settings: settings,
       );
 

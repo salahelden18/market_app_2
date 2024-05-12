@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:market_app_2/core/constants/endpoint_constants.dart';
 import 'package:market_app_2/core/error/http_failure.dart';
 import 'package:market_app_2/core/services/http_service_interface.dart';
+import 'package:market_app_2/features/products/data/models/branch_product_model.dart';
 import 'package:market_app_2/features/products/data/models/products_response_model.dart';
 import 'package:market_app_2/features/products/data/repos/product_repo.dart';
 
@@ -19,6 +20,16 @@ class ProductsRepoImpl implements ProductsRepo {
       fromJson: (decodedJson) => List<ProductsReponseModel>.from(
         decodedJson.map((e) => ProductsReponseModel.fromJson(e)),
       ),
+    );
+  }
+
+  @override
+  Future<Either<HttpFailure, List<BranchProductModel>?>> getRecommendedProducts(
+      int branchCategoryId) {
+    return _httpServiceInterface.get(
+      url: EndPointConstants.recommendedProducts(branchCategoryId),
+      fromJson: (decodedJson) => List<BranchProductModel>.from(
+          decodedJson.map((e) => BranchProductModel.fromJson(e))),
     );
   }
 }

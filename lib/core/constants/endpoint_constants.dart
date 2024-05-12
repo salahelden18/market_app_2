@@ -21,6 +21,8 @@ class EndPointConstants {
 
   // banners
   static const String bannersBase = "$_baseUrl/Banners";
+  static String recommendedProducts(int categoryId) =>
+      "$_baseUrl/BranchCategory/recommended-products/${categoryId.toString()}";
 
   // favorite
   static const String baseFavorite = "$_baseUrl/FavoriteProduct";

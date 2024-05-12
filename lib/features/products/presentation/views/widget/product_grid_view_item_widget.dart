@@ -18,9 +18,13 @@ import '../../../data/models/branch_product_model.dart';
 
 class ProductGridViewItemWidget extends StatefulWidget {
   const ProductGridViewItemWidget(
-      {super.key, required this.branchProductModel, required this.favorite});
+      {super.key,
+      required this.branchProductModel,
+      required this.favorite,
+      required this.branchCategoryId});
   final BranchProductModel branchProductModel;
   final List<FavoriteModel> favorite;
+  final int branchCategoryId;
 
   @override
   State<ProductGridViewItemWidget> createState() =>
@@ -46,7 +50,11 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
       onTap: () {
         if (stock != 0) {
           Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
-              arguments: [widget.branchProductModel, heroTag]);
+              arguments: [
+                widget.branchProductModel,
+                heroTag,
+                widget.branchCategoryId
+              ]);
         } else {
           showToast(context: context, msg: 'There is no Stock');
         }
@@ -91,7 +99,32 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 3),
-                Text('${widget.branchProductModel.price.toString()} ₺'),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Original price
+                    if (widget.branchProductModel.discountValue != 0)
+                      Text(
+                        '${widget.branchProductModel.price.toString()} ₺',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    if (widget.branchProductModel.discountValue != 0)
+                      const SizedBox(width: 3),
+                    Text(
+                      '${widget.branchProductModel.discountValue == 0 ? widget.branchProductModel.price : getDisount(widget.branchProductModel.discountTypes!, widget.branchProductModel.discountValue!, widget.branchProductModel.price)} ₺',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
