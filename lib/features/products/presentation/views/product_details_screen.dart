@@ -164,7 +164,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         const Spacer(),
                         ProductDetailsFavoriteButton(
-                            productId: branchProductModel.product!.id),
+                            branchProductId: branchProductModel.id),
                       ],
                     ),
                     const SizedBox(height: 10),

@@ -12,10 +12,10 @@ import 'package:market_app_2/features/favorite/presentation/model_views/favorite
 class ProductDetailsFavoriteButton extends StatefulWidget {
   const ProductDetailsFavoriteButton({
     super.key,
-    required this.productId,
+    required this.branchProductId,
   });
 
-  final String productId;
+  final int branchProductId;
 
   @override
   State<ProductDetailsFavoriteButton> createState() =>
@@ -52,7 +52,7 @@ class _ProductDetailsFavoriteButtonState
                   } else {
                     await context
                         .read<FavoritesCubit>()
-                        .addToFavorites(widget.productId);
+                        .addToFavorites(widget.branchProductId);
                   }
 
                   setState(() {
@@ -62,7 +62,7 @@ class _ProductDetailsFavoriteButtonState
                 }
               },
               child: isLoading
-                  ? const SizedBox( 
+                  ? const SizedBox(
                       height: 28, width: 28, child: LoadingWidget())
                   : Icon(
                       color: AppColors.primaryColor,
@@ -78,7 +78,7 @@ class _ProductDetailsFavoriteButtonState
 
   String? getProductFavId(List<FavoriteModel> favs) {
     for (var f in favs) {
-      if (widget.productId == f.product.id) {
+      if (widget.branchProductId == f.branchProduct.id) {
         return f.id;
       }
     }
