@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'widgets/button_bottom_navigation_widget.dart';
+import 'widgets/bottom_navigation_widget.dart';
 import '../../../../core/style/font_style.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../model_views/basket_cubit.dart';
