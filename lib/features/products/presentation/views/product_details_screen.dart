@@ -24,7 +24,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('????? ${ModalRoute.of(context)!.settings.arguments}');
     final arguments = ModalRoute.of(context)!.settings.arguments as List;
     final branchProductModel = arguments[0] as BranchProductModel;
 

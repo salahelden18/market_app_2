@@ -20,7 +20,7 @@ class FavoritesCubit extends Cubit<FavoriteStates> {
     );
   }
 
-  Future addToFavorites(String id) async {
+  Future addToFavorites(int id) async {
     var result = await _favoriteRepo.addFavorite(id);
 
     result.fold(

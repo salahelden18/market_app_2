@@ -11,7 +11,7 @@ class FavoriteRepoImpl implements FavoriteRepo {
   FavoriteRepoImpl(this._httpServiceInterface);
 
   @override
-  Future<Either<HttpFailure, FavoriteModel?>> addFavorite(String id) async {
+  Future<Either<HttpFailure, FavoriteModel?>> addFavorite(int id) async {
     return await _httpServiceInterface.post(
       url: '${EndPointConstants.baseFavorite}/$id',
       fromJson: (decodedJson) => FavoriteModel.fromJson(decodedJson),

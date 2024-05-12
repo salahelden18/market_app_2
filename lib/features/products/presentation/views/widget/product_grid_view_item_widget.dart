@@ -120,8 +120,9 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
                             .read<FavoritesCubit>()
                             .deleteFromFavorites(getProductId()!);
                       } else {
-                        await context.read<FavoritesCubit>().addToFavorites(
-                            widget.branchProductModel.product!.id);
+                        await context
+                            .read<FavoritesCubit>()
+                            .addToFavorites(widget.branchProductModel.id);
                       }
 
                       setState(() {
@@ -267,8 +268,8 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
   }
 
   bool isProductInFavorite() {
-    var index = widget.favorite.indexWhere((element) =>
-        element.product.id == widget.branchProductModel.product!.id);
+    var index = widget.favorite.indexWhere(
+        (element) => element.branchProduct.id == widget.branchProductModel.id);
 
     if (index != -1) {
       return true;
@@ -278,8 +279,8 @@ class _ProductGridViewItemWidgetState extends State<ProductGridViewItemWidget> {
   }
 
   String? getProductId() {
-    var index = widget.favorite.indexWhere((element) =>
-        element.product.id == widget.branchProductModel.product!.id);
+    var index = widget.favorite.indexWhere(
+        (element) => element.branchProduct.id == widget.branchProductModel.id);
 
     if (index != -1) {
       return widget.favorite[index].id;
