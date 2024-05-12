@@ -39,7 +39,7 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
       });
       await context
           .read<ProductsCubit>()
-          .getData(branch.state.branchModel!.id, item.branchCategoryModel.id!);
+          .getData(branch.state.branchModel!.id, item.branchCategoryModel.id);
 
       setState(() {
         isLoading = false;
@@ -107,7 +107,7 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
                                           .productsReponseModel[productIndex]
                                           .branchProducts[index],
                                       branchCategoryId:
-                                          widget.branchCategoryModel.id!,
+                                          widget.branchCategoryModel.id,
                                     ),
                                     itemCount: item
                                         .productsReponseModel[productIndex]

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:market_app_2/features/products/data/models/product_model.dart';
+import '../../../favorite/data/models/branch_sub_category_model.dart';
+import 'product_model.dart';
 
 class BranchProductModel extends Equatable {
   final int id;
@@ -8,6 +9,7 @@ class BranchProductModel extends Equatable {
   final double? discountValue;
   final int? discountTypes;
   final ProductModel? product;
+  final BranchSubCategoryModel? branchSubCategoryModel;
 
   const BranchProductModel({
     required this.id,
@@ -16,11 +18,10 @@ class BranchProductModel extends Equatable {
     required this.discountValue,
     required this.discountTypes,
     required this.product,
+    this.branchSubCategoryModel,
   });
 
   factory BranchProductModel.fromJson(Map<String, dynamic> json) {
-    print('here in branch produuct model');
-
     return BranchProductModel(
       id: json['id'],
       stock: json['stock'],
@@ -31,10 +32,20 @@ class BranchProductModel extends Equatable {
       product: json['product'] != null
           ? ProductModel.fromJson(json['product'])
           : null,
+      branchSubCategoryModel: json['branchSubCategory'] != null
+          ? BranchSubCategoryModel.fromJson(json['branchSubCategory'])
+          : null,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [id, stock, price, discountValue, discountTypes, product];
+  List<Object?> get props => [
+        id,
+        stock,
+        price,
+        discountValue,
+        discountTypes,
+        product,
+        branchSubCategoryModel
+      ];
 }

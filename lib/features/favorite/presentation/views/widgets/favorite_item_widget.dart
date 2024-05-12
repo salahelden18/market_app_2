@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
-import 'package:market_app_2/core/widget/loading_widget.dart';
-import 'package:market_app_2/features/favorite/presentation/model_views/favorites_cubit.dart';
+import '../../../../../core/style/app_colors.dart';
+import '../../../../../core/widget/loading_widget.dart';
+import '../../model_views/favorites_cubit.dart';
 import '../../../../../core/style/font_style.dart';
 import '../../../../products/presentation/views/product_details_screen.dart';
 import '../../../data/models/favorite_model.dart';
@@ -23,8 +23,14 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
         'product-image-hero-tag-${widget.favoriteModel.branchProduct.id}';
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
-            arguments: [widget.favoriteModel.branchProduct, heroTag]);
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: [
+          widget.favoriteModel.branchProduct,
+          heroTag,
+          widget.favoriteModel.branchProduct.branchSubCategoryModel
+                  ?.branchCategoryId ??
+              1,
+        ]);
       },
       child: Container(
         padding:

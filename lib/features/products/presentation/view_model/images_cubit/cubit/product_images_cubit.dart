@@ -1,7 +1,4 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
-part 'product_images_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductImagesCubit extends Cubit<int> {
   ProductImagesCubit() : super(0);

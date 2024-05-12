@@ -1,20 +1,20 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/style/app_colors.dart';
-import 'package:market_app_2/core/utils/dialog_manager_overlay.dart';
-import 'package:market_app_2/core/utils/show_toast.dart';
-import 'package:market_app_2/core/widget/filled_button_widget.dart';
-import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
-import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
-import 'package:market_app_2/features/basket/data/models/basket_request_model.dart';
-import 'package:market_app_2/features/basket/presentation/model_views/basket_cubit.dart';
-import 'package:market_app_2/features/basket/presentation/views/basket_screen.dart';
-import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
-import 'package:market_app_2/features/products/data/models/branch_product_model.dart';
-import 'package:market_app_2/features/products/presentation/view_model/images_cubit/cubit/product_images_cubit.dart';
-import 'package:market_app_2/features/products/presentation/views/widget/product_details_favorite_button.dart';
-import 'package:market_app_2/features/products/presentation/views/widget/recommended_products_widget.dart';
+import '../../../../core/style/app_colors.dart';
+import '../../../../core/utils/dialog_manager_overlay.dart';
+import '../../../../core/utils/show_toast.dart';
+import '../../../../core/widget/filled_button_widget.dart';
+import '../../../authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
+import '../../../authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
+import '../../../basket/data/models/basket_request_model.dart';
+import '../../../basket/presentation/model_views/basket_cubit.dart';
+import '../../../basket/presentation/views/basket_screen.dart';
+import '../../../home/presentation/view_models/branch/branch_cubit.dart';
+import '../../data/models/branch_product_model.dart';
+import '../view_model/images_cubit/cubit/product_images_cubit.dart';
+import 'widget/product_details_favorite_button.dart';
+import 'widget/recommended_products_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});

@@ -1,10 +1,10 @@
-part of 'product_images_cubit.dart';
+// part of 'product_images_cubit.dart';
 
-class ProductImagesState extends Equatable {
-  int currentImageIndex = 0;
+// class ProductImagesState extends Equatable {
+//   int currentImageIndex = 0;
 
-  ProductImagesState({required this.currentImageIndex});
+//   ProductImagesState({required this.currentImageIndex});
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }
