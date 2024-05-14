@@ -28,7 +28,7 @@ class NavBar extends StatelessWidget {
               selectedIndex: navBar.state,
               onTabChange: navBar.onTap,
               rippleColor: AppColors.primaryColor.withOpacity(.2),
-              tabBorderRadius: 10,
+            tabBorderRadius: 10,
               duration: const Duration(milliseconds: 250),
               gap: 5,
               color: AppColors.primaryColor,

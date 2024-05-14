@@ -17,6 +17,7 @@ import 'package:market_app_2/features/products/presentation/view_model/products_
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import 'package:market_app_2/features/products/presentation/views/products_screen.dart';
 import 'package:market_app_2/features/profile/presentation/view/edit_profile_screen.dart';
+import 'package:market_app_2/features/search/view/search_screen.dart';
 import 'package:market_app_2/loading_data_screen.dart';
 import 'package:market_app_2/not_found_screen.dart';
 import 'package:market_app_2/service_locator.dart';
@@ -104,6 +105,11 @@ Route<dynamic> generateRouter(RouteSettings settings) {
     case EditProfileScreen.routeName:
       return MaterialPageRoute(
         builder: (ctx) => EditProfileScreen(),
+        settings: settings,
+      );
+    case SearchScreen.routeName:
+      return MaterialPageRoute(
+        builder: (ctx) => const SearchScreen(),
         settings: settings,
       );
 

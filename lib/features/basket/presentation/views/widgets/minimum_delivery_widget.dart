@@ -20,11 +20,13 @@ class MinimumDeliveryWidget extends StatelessWidget {
       children: [
         LinearProgressIndicator(
           borderRadius: BorderRadiusDirectional.only(
-            topEnd: Radius.circular(totalPrice >= 100 ? 0 : 5),
-            bottomEnd: Radius.circular(totalPrice >= 100 ? 0 : 5),
+            topEnd: Radius.circular(
+                totalPrice >= branchModel.minimumOrderValue! ? 0 : 5),
+            bottomEnd: Radius.circular(
+                totalPrice >= branchModel.minimumOrderValue! ? 0 : 5),
           ),
           backgroundColor: AppColors.primaryColor.withOpacity(.4),
-          value: totalPrice >= 100
+          value: totalPrice >= branchModel.minimumOrderValue!
               ? 100
               : totalPrice / branchModel.minimumOrderValue!,
           minHeight: 10,
@@ -34,7 +36,7 @@ class MinimumDeliveryWidget extends StatelessWidget {
           width: double.infinity,
           color: AppColors.primaryColor.withOpacity(.2),
           child: Center(
-              child: Text(branchModel.minimumOrderValue != totalPrice
+              child: Text(totalPrice < branchModel.minimumOrderValue!
                   ? 'Minimum spend is ${branchModel.minimumOrderValue} ${branchModel.currencySymbol}, Just ${branchModel.minimumOrderValue! - totalPrice} ${branchModel.currencySymbol} more to go'
                   : 'You\'re ready to order 😊')),
         ),
