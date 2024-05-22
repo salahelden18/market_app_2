@@ -5,6 +5,7 @@ import 'features/products/presentation/view_model/products_cubit/products_cubit.
 import 'features/profile/presentation/model_views/profile_cubit.dart';
 import 'features/basket/presentation/model_views/basket_cubit.dart';
 import 'features/order/presentation/view_models/payment/payment_method_cubit.dart';
+import 'features/search/data/presentation/model_view/cubit/search_cubit.dart';
 import 'firebase_cloud_messaging.dart';
 import 'firebase_options.dart';
 import 'core/services/navigator_observer.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => CurrentActiveOrderCubit(di.sl())),
         BlocProvider(create: (ctx) => ProfileCubit(di.sl())),
         BlocProvider(create: (ctx) => ProductsCubit(di.sl())),
+        BlocProvider(create: (ctx) => SearchCubit()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

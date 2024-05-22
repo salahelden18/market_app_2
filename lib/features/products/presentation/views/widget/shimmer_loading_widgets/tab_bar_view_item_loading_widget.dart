@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:market_app_2/features/products/presentation/views/widget/shimmer_loading_widgets/product_grid_view_item_loading_widget.dart';
+import 'package:market_app_2/features/products/presentation/views/widget/shimmer_loading_widgets/grid_list_view_loading_widget.dart';
 import 'package:market_app_2/features/products/presentation/views/widget/shimmer_loading_widgets/tab_header_container_loading_widget.dart';
 
 class TabBarViewItemLoadingWidget extends StatefulWidget {
@@ -34,26 +34,13 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemLoadingWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemCount: 2,
               itemBuilder: (ctx, productIndex) {
-                return Column(
+                return const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TabHeaderContainerLoadingWidget(),
-                    const SizedBox(height: 15),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        mainAxisExtent: 190,
-                      ),
-                      itemBuilder: (ctx, index) =>
-                          const ProductGridViewLoadingItemWidget(),
-                      itemCount: 10,
-                    ),
-                    const SizedBox(height: 20)
+                    TabHeaderContainerLoadingWidget(),
+                    SizedBox(height: 15),
+                    GridListViewLoadingWidget(),
+                    SizedBox(height: 20)
                   ],
                 );
               }),

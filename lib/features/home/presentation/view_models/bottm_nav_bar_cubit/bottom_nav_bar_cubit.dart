@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:market_app_2/features/search/view/search_screen.dart';
+import 'package:market_app_2/features/search/data/presentation/view/search_screen.dart';
 import '../../../../favorite/presentation/views/favorite_screen.dart';
 import '../../../../profile/presentation/view/profile_screen.dart';
 import '../../views/widgets/home_screen_layout.dart';
@@ -26,11 +26,11 @@ class BottomNavBarCubit extends Cubit<int> {
       ];
 
   onTap(int index) {
-    if (index == 1) {
-      emit(previousIndex);
-    } else {
-      previousIndex = index;
-      emit(index);
-    }
+    // if (index == 1) {
+    //   emit(previousIndex);
+    // } else {
+    previousIndex = index;
+    emit(index);
+    // }
   }
 }

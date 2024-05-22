@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:market_app_2/core/style/app_colors.dart';
 import 'package:market_app_2/features/home/presentation/view_models/bottm_nav_bar_cubit/bottom_nav_bar_cubit.dart';
-import 'package:market_app_2/features/search/view/search_screen.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar(
@@ -35,7 +34,7 @@ class _NavBarState extends State<NavBar> {
             selectedIndex: navBar.state,
             onTabChange: (currentIndex) {
               if (currentIndex == 1) {
-                Navigator.of(context).pushNamed(SearchScreen.routeName);
+                // Navigator.of(context).pushNamed(SearchScreen.routeName);
               }
               navBar.onTap(currentIndex);
             },

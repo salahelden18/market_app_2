@@ -17,7 +17,8 @@ import 'package:market_app_2/features/products/presentation/view_model/products_
 import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import 'package:market_app_2/features/products/presentation/views/products_screen.dart';
 import 'package:market_app_2/features/profile/presentation/view/edit_profile_screen.dart';
-import 'package:market_app_2/features/search/view/search_screen.dart';
+import 'package:market_app_2/features/search/data/presentation/model_view/cubit/search_cubit.dart';
+import 'package:market_app_2/features/search/data/presentation/view/search_screen.dart';
 import 'package:market_app_2/loading_data_screen.dart';
 import 'package:market_app_2/not_found_screen.dart';
 import 'package:market_app_2/service_locator.dart';
@@ -109,7 +110,10 @@ Route<dynamic> generateRouter(RouteSettings settings) {
       );
     case SearchScreen.routeName:
       return MaterialPageRoute(
-        builder: (ctx) => const SearchScreen(),
+        builder: (ctx) => BlocProvider(
+          create: (context) => SearchCubit(),
+          child: const SearchScreen(),
+        ),
         settings: settings,
       );
 

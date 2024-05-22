@@ -52,4 +52,8 @@ class EndPointConstants {
 
   // user
   static const String userBase = "$_baseUrl/User";
+
+  // Search products
+  static String search(String branchId) =>
+      '$_baseUrl/BranchProduct/search/$branchId';
 }

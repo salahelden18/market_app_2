@@ -14,6 +14,8 @@ class CustomTextFormField extends StatelessWidget {
     this.autovalidateMode,
     this.prefixIcon,
     this.inputFormatters,
+    this.onChanged,
+    this.onFieldSubmitted,
   });
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -24,10 +26,14 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? prefixIcon;
   final List<TextInputFormatter>? inputFormatters;
   final double _borderRadius = 10;
+  final Function(String value)? onChanged;
+  final Function(String value)? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
       inputFormatters: inputFormatters,
       autovalidateMode: autovalidateMode,
       validator: validator,
