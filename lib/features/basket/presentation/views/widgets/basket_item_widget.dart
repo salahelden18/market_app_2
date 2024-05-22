@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
+import 'package:market_app_2/features/products/data/models/branch_product_model.dart';
 import '../../../../../core/style/app_colors.dart';
 import '../../../data/models/basket_product_model.dart';
 import '../../model_views/basket_cubit.dart';
@@ -10,6 +12,12 @@ class BasketItemWidget extends StatelessWidget {
   final BasketProductModel basketProductModel;
   @override
   Widget build(BuildContext context) {
+    final bool isThereDiscount =
+        basketProductModel.branchProductModel!.discountValue != 0;
+    final String currencySymbol =
+        context.read<BranchCubit>().state.branchModel!.currencySymbol!;
+    BranchProductModel branchProductModel =
+        basketProductModel.branchProductModel!;
     final String heroTag =
         'product-image-hero-tag-${basketProductModel.branchProductModel?.id}';
     return InkWell(
@@ -62,8 +70,32 @@ class BasketItemWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                        '${basketProductModel.branchProductModel!.price.toString()} ₺'),
+                    Row(
+                      children: [
+                        Text(
+                          '${basketProductModel.branchProductModel!.price.toString()} $currencySymbol',
+                          style: TextStyle(
+                            decoration: isThereDiscount
+                                ? TextDecoration.lineThrough
+                                : null,
+                            fontWeight: FontWeight.bold,
+                            color: isThereDiscount
+                                ? Colors.grey
+                                : AppColors.primaryColor,
+                            fontSize: isThereDiscount ? 13 : null,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        if (isThereDiscount)
+                          Text(
+                            '${getDisount(branchProductModel.discountTypes!, branchProductModel.discountValue!, branchProductModel.price)} $currencySymbol',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_app_2/core/widget/loading_widget.dart';
 import 'package:market_app_2/features/home/presentation/view_models/categories/categories_states.dart';
+import 'package:market_app_2/features/home/presentation/views/widgets/categories_loading_shimmer.dart';
 import 'package:market_app_2/features/home/presentation/views/widgets/category_list_item_widget.dart';
 import '../../view_models/branch/branch_cubit.dart';
 import '../../view_models/categories/categories_cubit.dart';
@@ -30,7 +30,7 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
     return BlocBuilder<CategoriesCubit, CategoriesStates>(
         builder: (ctx, state) {
       if (state is CategoriesLoadingState) {
-        return const LoadingWidget();
+        return const CategoriesLoadingShimmer();
       } else if (state is CategoriesSuccessState) {
         return GridView.builder(
           physics: const NeverScrollableScrollPhysics(),

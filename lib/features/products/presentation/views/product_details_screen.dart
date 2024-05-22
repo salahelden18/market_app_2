@@ -12,7 +12,6 @@ import '../../../basket/presentation/model_views/basket_cubit.dart';
 import '../../../basket/presentation/views/basket_screen.dart';
 import '../../../home/presentation/view_models/branch/branch_cubit.dart';
 import '../../data/models/branch_product_model.dart';
-import '../view_model/images_cubit/cubit/product_images_cubit.dart';
 import 'widget/product_details_favorite_button.dart';
 import 'widget/recommended_products_widget.dart';
 
@@ -27,19 +26,17 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool _discriptionTextExpanded = false;
   String? productId;
+  int currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as List;
     final branchProductModel = arguments[0] as BranchProductModel;
-
     final List images = List.generate(
         branchProductModel.product!.images.length,
         (index) => Container(
             color: Colors.white,
-            child: Expanded(
-                child:
-                    Image.network(branchProductModel.product!.images[index]))));
+            child: Image.network(branchProductModel.product!.images[index])));
 
     final heroTag = arguments[1] as String;
     int branchCategoryId = arguments[2] as int;
@@ -54,8 +51,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         length: 2,
         child: CustomScrollView(
           slivers: [
-            // The product image
+            // // The product image
             SliverAppBar(
+              backgroundColor: Colors.white,
               elevation: 0,
               pinned: true,
               expandedHeight: 300,
@@ -91,40 +89,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   StretchMode.blurBackground,
                 ],
                 // Todo
-                background: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: [
-                    PageView.builder(
-                      onPageChanged: (value) {
-                        context
-                            .read<ProductImagesCubit>()
-                            .changeCurrentImageIndex(value);
-                      },
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Hero(
-                            tag: heroTag,
-                            child: images[index],
-                          );
-                        }
-                        return images[index];
-                      },
-                      itemCount: images.length,
-                    ),
-                    BlocBuilder<ProductImagesCubit, int>(
-                      builder: (context, state) => DotsIndicator(
-                        dotsCount: images.length,
-                        position: state,
-                        decorator: DotsDecorator(
-                          size: const Size.square(9.0),
-                          activeSize: const Size(20.0, 9.0),
-                          activeShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
+                background: Container(
+                  color: Colors.white,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: [
+                      if (images.isNotEmpty)
+                        PageView.builder(
+                          onPageChanged: (value) {
+                            setState(() {
+                              currentImageIndex = value;
+                            });
+                          },
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Hero(
+                                tag: heroTag,
+                                child: images[index],
+                              );
+                            }
+                            return images[index];
+                          },
+                          itemCount: images.length,
                         ),
-                      ),
-                    ),
-                  ],
+                      if (images.isNotEmpty)
+                        DotsIndicator(
+                          dotsCount: images.length,
+                          position: currentImageIndex,
+                          decorator: DotsDecorator(
+                            size: const Size.square(9.0),
+                            activeSize: const Size(20.0, 9.0),
+                            activeShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -214,30 +215,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       bottomNavigationBar: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(10),
-        child: Expanded(
-          child: FilledButtonWidget(
-            onPress: () async {
-              final auth = context.read<AutoAuthenticationCubit>();
-              if (auth.state.authenticationState !=
-                  AuthenticationStates.authenticated) {
-                showToast(context: context, msg: 'Please login first');
-              } else {
-                DialogManagerOverlay.showDialogWithMessage(context);
-                await context.read<BasketCubit>().addToBasket(
-                      BasketRequestModel(
-                        branchId:
-                            context.read<BranchCubit>().state.branchModel!.id,
-                        branchProductId: branchProductModel.id,
-                      ),
-                    );
+        child: FilledButtonWidget(
+          onPress: () async {
+            final auth = context.read<AutoAuthenticationCubit>();
+            if (auth.state.authenticationState !=
+                AuthenticationStates.authenticated) {
+              showToast(context: context, msg: 'Please login first');
+            } else {
+              DialogManagerOverlay.showDialogWithMessage(context);
+              await context.read<BasketCubit>().addToBasket(
+                    BasketRequestModel(
+                      branchId:
+                          context.read<BranchCubit>().state.branchModel!.id,
+                      branchProductId: branchProductModel.id,
+                    ),
+                  );
 
-                DialogManagerOverlay.closeDialog();
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-              }
-            },
-            widget: const Text('Add to Basket'),
-          ),
+              DialogManagerOverlay.closeDialog();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            }
+          },
+          widget: const Text('Add to Basket'),
         ),
       ),
     );

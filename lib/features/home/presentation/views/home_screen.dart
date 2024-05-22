@@ -11,8 +11,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final navBar = context.watch<BottomNavBarCubit>();
     return Scaffold(
-      bottomNavigationBar: NavBar(context, navBar),
       body: navBar.pages[navBar.state],
+      bottomNavigationBar: NavBar(context),
     );
   }
 }

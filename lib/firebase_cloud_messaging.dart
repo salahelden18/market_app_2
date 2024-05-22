@@ -1,10 +1,23 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
+import 'package:market_app_2/service_locator.dart';
 
 String? fcmToken;
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  CurrentActiveOrderCubit currentActiveOrderCubit =
+      CurrentActiveOrderCubit(sl());
+
   // Handle incoming messages when the app is in the background or terminated
+  print(
+      '=============================================================================');
+  print('----- Message Body -----');
   print("Message handled in background: ${message.notification?.title}");
+  print('----- Notification Body -----');
+  print('>>>>>>>>>>>>>>>>>>>>>>>> ${message.data}');
+  print(
+      '=============================================================================');
+currentActiveOrderCubit.getActiveOrders();
 }
 
 // Cloud messaging

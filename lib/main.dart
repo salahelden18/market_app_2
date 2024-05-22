@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/products/presentation/view_model/images_cubit/cubit/product_images_cubit.dart';
 import 'features/products/presentation/view_model/products_cubit/products_cubit.dart';
 import 'features/profile/presentation/model_views/profile_cubit.dart';
 import 'features/basket/presentation/model_views/basket_cubit.dart';
@@ -69,7 +68,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => PaymentMethodCubit(di.sl())),
         BlocProvider(create: (ctx) => CurrentActiveOrderCubit(di.sl())),
         BlocProvider(create: (ctx) => ProfileCubit(di.sl())),
-        BlocProvider(create: (ctx) => ProductImagesCubit()),
         BlocProvider(create: (ctx) => ProductsCubit(di.sl())),
       ],
       child: MaterialApp(

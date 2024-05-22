@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/home/data/models/branch_category_model.dart';
+import 'package:market_app_2/features/products/presentation/views/widget/shimmer_loading_widgets/tab_bar_view_item_loading_widget.dart';
 import '../../../../favorite/presentation/model_views/favorites_cubit.dart';
 import '../../../../favorite/presentation/model_views/favorites_states.dart';
 import '../../../../../core/style/font_style.dart';
-import '../../../../../core/widget/loading_widget.dart';
 import '../../../../home/presentation/view_models/branch/branch_cubit.dart';
 import '../../view_model/products_cubit/products_cubit.dart';
 import 'tab_header_container_widget.dart';
@@ -51,7 +51,7 @@ class _TabBarViewItemWidgetState extends State<TabBarViewItemWidget> {
   Widget build(BuildContext context) {
     context.watch<ProductsCubit>();
     return isLoading
-        ? const LoadingWidget()
+        ? const TabBarViewItemLoadingWidget()
         : BlocBuilder<FavoritesCubit, FavoriteStates>(
             builder: (context, favoriteState) {
             return Column(
