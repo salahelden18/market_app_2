@@ -22,8 +22,6 @@ class OrderStatusModel extends Equatable {
   });
 
   factory OrderStatusModel.fromJson(Map<String, dynamic> json) {
-    print('Here in order status model');
-
     return OrderStatusModel(
       id: json['id'],
       enName: json['enName'],

@@ -99,10 +99,11 @@ class OrderModel extends Equatable {
         totalPrice,
         deliveryFees,
         createdAt,
-        paymentMethodModel,
         orderStatusModel,
+        paymentMethodModel,
         basketModel,
         addressModel,
+        orderEvents,
         loadCurrentActiveOrders,
       ];
 }
