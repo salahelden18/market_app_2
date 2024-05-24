@@ -17,7 +17,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('>>>>>>>>>>>>>>>>>>>>>>>> ${message.data}');
   print(
       '=============================================================================');
-currentActiveOrderCubit.getActiveOrders();
+  await currentActiveOrderCubit.getActiveOrders();
 }
 
 // Cloud messaging

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
+import 'package:market_app_2/service_locator.dart';
 
 import '../../../../../core/style/app_colors.dart';
 import '../../../../basket/presentation/model_views/basket_cubit.dart';
@@ -23,7 +25,7 @@ class BasketBadgeWidget extends StatelessWidget {
           basketCubit.state.basket!.basketProducts.isNotEmpty,
       alignment: Alignment.topCenter,
       child: IconButton(
-        onPressed: () {
+        onPressed: () async {
           Navigator.of(context).pushNamed(BasketScreen.routeName);
         },
         icon: Icon(
