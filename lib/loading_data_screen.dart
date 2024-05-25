@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/core/widget/splash_loading_screen.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_cubit.dart';
 import 'package:market_app_2/features/authentication/presentation/model_views/auto_authenticate/auto_authentication_state.dart';
 import 'features/basket/presentation/model_views/basket_cubit.dart';
@@ -7,8 +8,6 @@ import 'features/favorite/presentation/model_views/favorites_cubit.dart';
 import 'features/home/presentation/views/home_screen.dart';
 import 'features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
 import 'features/profile/presentation/model_views/profile_cubit.dart';
-
-import 'core/widget/loading_widget.dart';
 import 'features/address/presentation/model_views/address_cubit.dart';
 import 'features/home/presentation/view_models/banners/banners_cubit.dart';
 import 'features/home/presentation/view_models/branch/branch_cubit.dart';
@@ -25,7 +24,7 @@ class LoadingDataScreen extends StatelessWidget {
         future: getData(context),
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingWidget();
+            return const SplashLoadingScreen();
           } else if (snapshot.hasError) {
             print('>>>>>>>>> ${snapshot.error}');
             print('>>>>>>>>> $snapshot');

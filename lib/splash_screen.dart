@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/core/widget/splash_loading_screen.dart';
 import 'loading_data_screen.dart';
-import 'core/widget/loading_widget.dart';
 import 'features/home/presentation/view_models/location_and_gps_cubit/location_and_gps_cubit.dart';
 import 'features/home/presentation/view_models/location_and_gps_cubit/location_and_gps_states.dart';
 
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         },
         builder: (context, state) {
           if (state.isLoading) {
-            return const LoadingWidget();
+            return const SplashLoadingScreen();
           } else if (state.hasError) {
             return Center(
               child: Text(state.errorMessage ?? 'error'),
