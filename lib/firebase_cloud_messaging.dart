@@ -3,28 +3,27 @@ import 'package:market_app_2/features/order/presentation/view_models/active_orde
 import 'package:market_app_2/service_locator.dart';
 
 String? fcmToken;
+CurrentActiveOrderCubit currentActiveOrderCubit = CurrentActiveOrderCubit(sl());
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  CurrentActiveOrderCubit currentActiveOrderCubit =
-      CurrentActiveOrderCubit(sl());
-
   // Handle incoming messages when the app is in the background or terminated
-  print(
-      '=============================================================================');
-  print('----- Message Body -----');
   print("Message handled in background: ${message.notification?.title}");
-  print('----- Notification Body -----');
-  print('>>>>>>>>>>>>>>>>>>>>>>>> ${message.data}');
-  print(
-      '=============================================================================');
-  await currentActiveOrderCubit.getActiveOrders();
 }
 
 // Cloud messaging
-configureFirebaseMessaging() {
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+configureFirebaseMessaging() async {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     // Handle incoming messages when the app is in the foreground
-    print("Message received: ${message.notification?.title}");
+    print(
+        '=============================================================================');
+    print('----- Message Body -----');
+    print("Message handled in background: ${message.notification?.title}");
+    print('----- Notification Body -----');
+    print('>>>>>>>>>>>>>>>>>>>>>>>> ${message.data}');
+    print(
+        '=============================================================================');
+    await currentActiveOrderCubit.reset();
+    await currentActiveOrderCubit.getActiveOrders();
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {

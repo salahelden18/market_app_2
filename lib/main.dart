@@ -35,12 +35,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await di.init();
+
   // Configure Firebase Cloud Messaging
   await configureFirebaseMessaging();
   await requestNotificationPermissions();
   await handleFCMToken();
-
-  await di.init();
 
   Bloc.observer = CustomBlocObserver();
 
