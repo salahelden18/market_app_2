@@ -1,9 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_app_2/features/order/presentation/view_models/active_order/current_active_orders_cubit.dart';
-import 'package:market_app_2/service_locator.dart';
+import 'package:market_app_2/main.dart';
 
 String? fcmToken;
-CurrentActiveOrderCubit currentActiveOrderCubit = CurrentActiveOrderCubit(sl());
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // Handle incoming messages when the app is in the background or terminated
@@ -22,8 +22,9 @@ configureFirebaseMessaging() async {
     print('>>>>>>>>>>>>>>>>>>>>>>>> ${message.data}');
     print(
         '=============================================================================');
-    await currentActiveOrderCubit.reset();
-    await currentActiveOrderCubit.getActiveOrders();
+    await navigatorKey.currentContext
+        ?.read<CurrentActiveOrderCubit>()
+        .getActiveOrders();
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
