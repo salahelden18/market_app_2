@@ -15,7 +15,7 @@ class MinimumDeliveryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BranchModel branchModel =
-        context.read<BranchCubit>().state.branchModel as BranchModel;
+        context.watch<BranchCubit>().state.branchModel as BranchModel;
     return Column(
       children: [
         LinearProgressIndicator(
