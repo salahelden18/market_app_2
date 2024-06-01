@@ -43,8 +43,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     productId = branchProductModel.product!.id;
 
-    double price = getDisount(branchProductModel.discountTypes!,
-        branchProductModel.discountValue!, branchProductModel.price);
+    double price = getDisount(branchProductModel.discountTypes,
+        branchProductModel.discountValue, branchProductModel.price);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: DefaultTabController(
@@ -243,10 +243,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 }
 
-double getDisount(int discountType, double discountValue, double price) {
+double getDisount(int? discountType, double? discountValue, double price) {
+  if (discountType == null ||
+      discountValue == null ||
+      discountType == 0 ||
+      discountValue == 0) {
+    return price;
+  }
+
   // If the discount percentage
-  if (discountType == 1) {
+  if (discountType == 0) {
     return price * (discountValue / 100);
   }
+
   return price - discountValue;
 }
