@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_app_2/features/home/presentation/view_models/branch/branch_cubit.dart';
+import 'package:market_app_2/features/products/presentation/views/product_details_screen.dart';
 import '../../../../../core/style/app_colors.dart';
 import '../../../../basket/data/models/basket_product_model.dart';
 
@@ -8,6 +11,10 @@ class OrderProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String currencySymbol =
+        context.read<BranchCubit>().state.branchModel!.currencySymbol!;
+    final bool isThereDiscount =
+        basketProductModel.branchProductModel!.discountValue != 0;
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -37,7 +44,31 @@ class OrderProductItemWidget extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text('Quantity: ${basketProductModel.quantity}'),
                 const SizedBox(height: 5),
-                Text('${basketProductModel.branchProductModel!.price} ₺'),
+                Row(
+                  children: [
+                    Text(
+                      '${basketProductModel.branchProductModel!.price.toString()} $currencySymbol',
+                      style: TextStyle(
+                        decoration:
+                            isThereDiscount ? TextDecoration.lineThrough : null,
+                        fontWeight: FontWeight.bold,
+                        color: isThereDiscount
+                            ? Colors.grey
+                            : AppColors.primaryColor,
+                        fontSize: isThereDiscount ? 13 : null,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    if (isThereDiscount)
+                      Text(
+                        '${getDisount(basketProductModel.branchProductModel!.discountTypes!, basketProductModel.branchProductModel!.discountValue!, basketProductModel.branchProductModel!.price)} $currencySymbol',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                  ],
+                ),
               ],
             ),
           ),

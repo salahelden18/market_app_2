@@ -244,16 +244,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 }
 
 double getDisount(int? discountType, double? discountValue, double price) {
-  if (discountType == null ||
-      discountValue == null ||
-      discountType == 0 ||
-      discountValue == 0) {
+  if (discountType == null || discountValue == null || discountValue == 0) {
     return price;
   }
 
   // If the discount percentage
   if (discountType == 0) {
-    return price * (discountValue / 100);
+    return price - (price * (discountValue / 100));
   }
 
   return price - discountValue;

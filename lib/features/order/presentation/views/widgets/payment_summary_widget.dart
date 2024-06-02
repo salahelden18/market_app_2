@@ -26,11 +26,11 @@ class PaymentSummaryWidget extends StatelessWidget {
           value: '${order.deliveryFees.toString()} ₺',
         ),
         const SizedBox(height: 10),
-        const PaymentSummaryItemWidget(
-          isGreen: true,
-          title: 'You Saved', 
-          value: '🎉  0 ₺',
-        ),
+        // const PaymentSummaryItemWidget(
+        //   isGreen: true,
+        //   title: 'You Saved',
+        //   value: '🎉  0 ₺',
+        // ),
         const SizedBox(height: 5),
         const Divider(),
         const SizedBox(height: 5),
