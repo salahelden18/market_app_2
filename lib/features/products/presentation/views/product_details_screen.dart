@@ -250,7 +250,7 @@ double getDisount(int? discountType, double? discountValue, double price) {
 
   // If the discount percentage
   if (discountType == 0) {
-    return price -( price * (discountValue / 100));
+    return price - (price * (discountValue / 100));
   }
 
   return price - discountValue;

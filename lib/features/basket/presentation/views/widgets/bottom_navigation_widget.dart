@@ -59,7 +59,8 @@ class ButtonBottomNavigationBar extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text('Checkout'),
                         ),
-                        Text('${basket.state.basket?.totalPrice} TL'),
+                        Text(
+                            '${basket.state.basket?.totalPrice} ${branch.state.branchModel!.currencySymbol}'),
                       ],
                     ),
                   ),
